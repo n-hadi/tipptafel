@@ -1,0 +1,143 @@
+{% load static %}
+<div class="slideout" id="slideout-wetten">
+ <h4 class="container-header mb3">Wetten</h4>
+ <ul class="slideout-list">
+  <li>
+   <a class="slide-btn bg-gray bold"
+    {% if user.is_authenticated %}
+    hx-get="{% url 'mybets'  %}"
+    hx-indicator="#content_spinner"
+    hx-target="#page-content" 
+    hx-push-url="true"
+    {% else %}
+    href="{% url 'login' %}"
+    {% endif %}
+   >
+    <img class="align-middle" width="22px" src="{% static 'icons/mobile_menu/profil_black.png' %}" width="16px" alt="">
+    <span class="clr-black">Meine Wetten</span>
+   </a>
+  </li>
+  <li>
+   <a class="slide-btn bg-four bold"
+    {% if user.is_authenticated %}
+      hx-get="{% url 'create_bet'  %}"
+      hx-indicator="#content_spinner"
+      hx-target="#page-content" 
+      hx-push-url="true"
+    {% else %}
+      href="{% url 'login' %}"
+    {% endif %}
+   >
+    <img class="align-middle" width="22px" src="{% static 'brand/icons/logo_yt_flipped.png' %}" alt="">
+    <span class="clr-yt">Wette erstellen!</span>
+   </a>
+  </li>
+  <li>
+   <a class="slide-btn bg-zero bold"
+     hx-get="{% url 'index' %}"
+     hx-indicator="#content_spinner"
+      hx-target="#page-content" 
+      hx-push-url="true"
+   >
+    <img class="align-middle" width="22px" src="{% static 'brand/icons/logo_yt_flipped.png' %}" alt="">
+    <span class="clr-yt">Wette suchen!</span>
+   </a>
+  </li>
+ </ul>
+</div>
+<div class="slideout" id="slideout-infos">
+ <h4 class="container-header">Informationen</h4>
+ <ul class="slideout-list" style="line-height: 2rem;">
+  <li><a href="">Wer wir sind</a></li>
+  <li><a href="">Häufig gestellte Fragen</a></li>
+  <li><a href="">Hilfe</a></li>
+  <li><a href="">AGB</a></li>
+  <li><a href="">Datenschutz</a></li>
+  <li><a href="">Spielschutz</a></li>
+  <li><a href="">Impressum</a></li>
+ </ul>
+</div>
+<div class="slideout" id="slideout-comm">
+ <h4 class="container-header">Community</h4>
+ <ul class="slideout-list" style="line-height: 3rem;">
+  <li><a href="" class="slideout-com-btn">
+    <img src="{% static 'icons/ranglisten.png' %}" alt="" srcset=""> Ranglisten</a>
+  </li>
+  <li><a href="" class="slideout-com-btn">
+    <img src="{% static 'icons/gutscheine.png' %}" alt="" srcset=""> Gutscheine</a>
+  </li>
+  <li><a href="" class="slideout-com-btn">
+    <img src="{% static 'icons/aktionen.png' %}" alt="" srcset=""> Aktionen</a>
+  </li>
+ </ul>
+</div>
+<div class="slideout" id="slideout-profil">
+  <h4 class="container-header">Profil</h4>
+  <ul class="slideout-list">
+    <li>
+      <a class="slide-btn bg-gray bold" 
+      {% if user.is_authenticated %} 
+      hx-get="{% url 'mybets'  %}" 
+      hx-indicator="#content_spinner"
+      hx-target="#page-content" 
+      hx-push-url="true"
+      {% else %} 
+      href="{% url 'login' %}" 
+      {% endif %} >
+        <img class="align-middle" width="22px" src="{% static 'icons/mobile_menu/profil_black.png' %}"width="16px"
+          alt="">
+        <span class="clr-black">Meine Wetten</span>
+      </a>
+    </li>
+    <li>
+      <a class="slide-btn bg-five bold" 
+      {% if user.is_authenticated %} 
+      hx-get="{% url 'payments'  %}" 
+      hx-indicator="#content_spinner"
+      hx-target="#page-content" 
+      hx-push-url="true"
+      {% else %} 
+      href="{% url 'login' %}" 
+      {% endif %}>
+        <img class="align-middle" width="18px" src="{% static 'icons/navigation_btn/currency-euro.svg' %}" alt="">
+        <span class="clr-yt">Zahlungen</span>
+      </a>
+    </li>
+    <li>
+      <a class="slide-btn bold" 
+      {% if user.is_authenticated %} 
+      hx-get="{% url 'settings'  %}" 
+      hx-indicator="#content_spinner"
+      hx-target="#page-content" 
+      hx-push-url="true"
+      {% else %}
+      href="{% url 'login' %}" 
+      {% endif %} 
+      style="background-color:gray"
+      >
+        <img class="align-middle" width="22px" src="{% static 'icons/navigation_btn/gear.svg' %}" alt="" width="16px">
+        <span class="clr-yt">Einstellungen</span>
+      </a>
+    </li>
+  </ul>
+</div>
+
+<div id="mobile-menu">
+
+ <a data-activate="slideout-wetten" class="clr-yt center unstyled slideout-btn">
+  <img src="{% static 'brand/icons/logo_yt_flipped.png' %}" alt=""> <br>
+  <span>Wetten</span>
+ </a>
+ <a data-activate="slideout-infos" class="clr-yt center unstyled slideout-btn">
+  <img style="margin-top: 0.2rem; margin-bottom: 0.3rem;" src="{% static 'icons/mobile_menu/infos.png' %}" alt=""> <br>
+  Infos
+ </a>
+ <a data-activate="slideout-comm" class="clr-yt center unstyled slideout-btn">
+  <img src="{% static 'icons/mobile_menu/community.png' %}" alt=""> <br>
+  Community
+ </a>
+ <a data-activate="slideout-profil" class="clr-yt center unstyled slideout-btn">
+  <img src="{% static 'icons/mobile_menu/profil.png' %}" alt=""> <br>
+  Profil
+ </a>
+</div>

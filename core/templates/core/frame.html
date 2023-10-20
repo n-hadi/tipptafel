@@ -1,0 +1,421 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <meta http-equiv="X-UA-Compatible" content="IE=edge">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <link rel="stylesheet" href="{% static 'css/bass.css' %}">
+ <link rel="stylesheet" href="{% static 'css/style.css' %}">
+ <link rel="stylesheet" href="{% static 'css/create_bet_carousel.css' %}">
+ <link rel="stylesheet" href="{% static 'css/bl_widget_table.css' %}">
+ <link rel="shortcut icon" href="{% static 'brand/favicon/favicon.ico' %}" type="image/x-icon">
+ <title>Tipptafel | P2P Sportwetten </title>
+ <style>
+  .landing{
+    background-image: url('{{background.img.url}}');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;              
+  }
+ </style>
+</head>
+<body class="m0">
+{% block nav %}{% include 'core/blocks/nav.html' %}{% endblock nav %}
+
+ <div class="flex">
+
+  <div class="sidebar">
+    <section >
+      {% if user.is_authenticated %}
+      <div class="w100 pt2 center" style="line-height:1.4rem;">
+        <span class="mb4 f12 sidebar-guthaben-hd">Mein Guthaben</span> <br>
+        <span id="sidebar-guthaben">
+          <a hx-get="{% url 'deposit_funds' %}" class="unstyled p0 m0 cursor-pointer" hx-target="#page-content">
+            <span>
+              {{ user.balance.amount.normalize }}
+              <img class="align-middle absolute" src="{% static 'icons/tipptaler/tipptaler19x19.png' %}" alt=""
+                style="margin-left: 0.2rem;" title="Tipptaler">
+            </span>
+          </a>
+        </span>
+      </div>
+      <hr style="border: 1px solid var(--three);">
+      {% else %}
+      <h4 class="sidebar-header">Navigation</h4>
+      
+      {% endif %}
+      
+      
+      
+      <a class="navigation-btn sidebarlinks bold" style="background-color: var(--zero);" 
+        {% if user.is_authenticated %}
+        hx-get="{% url 'mybets'  %}"
+        hx-indicator="#content_spinner"
+        hx-target="#page-content" 
+        hx-push-url="true"
+        {% else %}
+        href="{% url 'login' %}"
+        {% endif %}
+        >
+        <img class="align-middle" src="{% static 'icons/navigation_btn/profil.png' %}" alt="">
+        <span class="clr-yt">Dashboard</span>
+      </a>
+      
+      <a class="navigation-btn sidebarlinks bold"
+        {% if user.is_authenticated %}
+        hx-get="{% url 'create_bet'  %}"
+        hx-indicator="#content_spinner"
+        hx-target="#page-content" 
+        hx-push-url="true"
+        {% else %}
+        href="{% url 'login' %}"
+        {% endif %}
+        
+      >
+        <img class="align-middle" src="{% static 'icons/navigation_btn/logo_yt_flipped.png' %}" alt="">
+        <span class="clr-yt"> Wette erstellen!</span>
+      </a>
+      
+      <a class="navigation-btn sidebarlinks bold" style="background-color:var(--three);border: 1px solid rgba(0, 0, 0, 0.1);"
+        {% if user.is_authenticated %}
+        hx-get="{% url 'index' %}"
+        hx-indicator="#content_spinner"
+        hx-target="#page-content" 
+        hx-push-url="true"
+        {% else %}
+        href="{% url 'login' %}"
+        {% endif %}
+      >
+        <img class="align-baseline" src="{% static 'icons/lupe64.png' %}" width="14px" alt="">
+        <span class="clr-blck"> Wette suchen!</span>
+      </a>
+      
+      {% if user.is_authenticated %}
+      <a class="navigation-btn sidebarlinks bold" style="background-color:var(--five)"
+        hx-get="{% url 'payments'  %}"
+        hx-indicator="#content_spinner"
+        hx-target="#page-content"
+        hx-push-url="true"
+      >
+        <img class="align-middle" src="{% static 'icons/navigation_btn/currency-euro.svg' %}" alt="">
+        <span class="clr-yt"> Zahlungen</span>
+      </a>
+      
+      <a class="navigation-btn sidebarlinks bold" style="background-color:gray"
+        hx-get="{% url 'settings'  %}"
+        hx-indicator="#content_spinner"
+        hx-target="#page-content"
+        hx-push-url="true"
+      >
+        <img class="align-middle" src="{% static 'icons/navigation_btn/gear.svg' %}" alt="">
+        <span class="clr-yt"> Einstellungen</span>
+      </a>
+      
+      {% endif %}
+    </section>
+    
+    <section>
+      <h4 class="sidebar-header">Liga</h4>
+      <a class="liga sidebarlinks" 
+       hx-get="{% url 'index' %}?tournament=Bundesliga" 
+       hx-push-url="true" 
+       hx-target="#page-content" 
+       hx-indicator="#content_spinner"
+      >
+        <img class="align-middle" src="{% static 'pics/leagues/cropped_leagues/small/bundesliga-logo.png' %}" alt="">
+        Bundesliga
+      </a>
+      <a class="liga sidebarlinks" 
+       hx-get="{% url 'index' %}?tournament=Premier League" 
+       hx-push-url="true" 
+       hx-target="#page-content" 
+       hx-indicator="#content_spinner"
+      >
+        <img class="" src="{% static 'pics/leagues/cropped_leagues/small/premierleague-logo.png' %}" alt=""> Premier League
+      </a>
+      <a class="liga sidebarlinks" 
+       hx-get="{% url 'index' %}?tournament=La liga" 
+       hx-push-url="true" 
+       hx-target="#page-content" 
+       hx-indicator="#content_spinner"
+      >
+        <img class="align-middle" src="{% static 'pics/leagues/cropped_leagues/small/laliga-logo.png' %}" alt=""> La Liga
+      </a>
+      <a class="liga sidebarlinks" 
+       hx-get="{% url 'index' %}?tournament=Serie A" 
+       hx-push-url="true" 
+       hx-target="#page-content" 
+       hx-indicator="#content_spinner"
+      >
+        <img class="align-middle" src="{% static 'pics/leagues/cropped_leagues/small/seriea-logo.png' %}" alt=""> Serie A
+      </a>
+      <a class="liga sidebarlinks" 
+       hx-get="{% url 'index' %}?tournament=Ligue 1" 
+       hx-push-url="true" 
+       hx-target="#page-content" 
+       hx-indicator="#content_spinner"
+      >
+        <img class="align" src="{% static 'pics/leagues/cropped_leagues/small/ligue1-logo.png' %}" alt=""> Ligue 1
+      </a>
+      <a class="liga sidebarlinks" 
+      hx-get="{% url 'index' %}?tournament=Europa League" 
+       hx-push-url="true" 
+       hx-target="#page-content" 
+       hx-indicator="#content_spinner"
+       >
+        <img class="" src="{% static 'pics/leagues/cropped_leagues/small/ec-logo.png' %}" alt=""> Europa League
+      </a>
+      <a class="liga sidebarlinks" 
+       hx-get="{% url 'index' %}?tournament=Champions League" 
+       hx-push-url="true" 
+       hx-target="#page-content" 
+       hx-indicator="#content_spinner"
+       >
+        <img class="align-middle" src="{% static 'pics/leagues/cropped_leagues/small/cl-logo.png' %}" alt=""> Champions
+        League
+      </a>
+    </section>
+  
+    <section>
+      <h4 class="sidebar-header">Community</h4>
+      <a class="m2 bg-three border1 sidebarlinks" >
+        <img class="align-middle" src="{% static 'icons/ranglisten.png' %}" alt=""> Ranglisten
+      </a>
+      <a class="m2 bg-three border1 sidebarlinks" >
+        <img class="align-middle" src="{% static 'icons/gutscheine.png' %}" alt=""> Gutscheine
+      </a>
+      <a class="m2 bg-three border1 sidebarlinks" >
+        <img class="align-middle" src="{% static 'icons/aktionen.png' %}" alt=""> Aktionen
+      </a>
+      {% if user.is_authenticated %}
+      <hr style="border: 1px solid var(--three);">
+      <a href="{% url 'logout' %}" class="navigation-btn bold m2 sidebarlinks" style="background-color:black">
+        <img class="align-middle" src="{% static 'icons/navigation_btn/door-open-fill.svg' %}" alt="">
+        <span class="clr-yt"> Ausloggen</span>
+      </a>
+      {% endif %}
+    </section>
+
+    
+    
+  
+  </div>
+    
+
+  <div id="page-content">
+    {% block content %}{% endblock content %}
+  </div>
+
+</div>
+
+<section id="filtermodal" class="modal hide p0" style="line-height: 2rem; max-height: 100vh; overflow-y: scroll;">
+  <h4 class="container-header" style="margin-left: 0;">
+    Filter 
+    <button id="filtermodal-close" class="modal-close right">x</button>
+ </h4> 
+  <label for="liga-select">Liga:</label>
+  <select class="right" name="liga-select" id=""
+  hx-trigger="change"
+  hx-get="{% url 'get_games' %}"
+  hx-target="#select_games"
+  hx-indicator="#spiel_spinner"
+  > 
+    <option value="empty">-------</option>
+    {% for tournament in tournaments %}
+    <option value="{{tournament.name}}">{{tournament.name}}</option>
+    {% endfor %}
+  </select>
+  <br>
+  <!--
+  <label for="date">Datum:</label>
+  <input type="date" class="right" name="date" id="" style="width: 133px;">
+  <br>
+  -->
+  <label class="w100" for="">
+    Spiele: 
+    <img src="{% static 'icons/spinner.svg' %}" width="25px" class="my-indicator right" id="spiel_spinner" alt="" srcset="">
+  </label>
+  <br>
+
+  <form 
+  hx-get="{% url 'index' %}" 
+  hx-push-url="true" 
+  hx-target="#page-content" 
+  hx-indicator="#content_spinner" 
+  id="filter-form">
+    <div class="rounded border f14 mt1" style="border-color: #ddd; height: 150px; overflow-y: scroll;" id="select_games">
+    
+    
+    </div>
+    <h4 class="container-header" style="margin-left: 0;">
+      Sortieren
+    </h4>
+    <label for="">
+      <span>Min
+         <img src="{% static 'icons/tipptaler/tipptaler14x14.png' %}" 
+         alt="Tipptaler" 
+         class="align-middle"
+         title="Tipptaler"> 
+      </span>
+    </label>
+    <input class="right" type="number" name="Min" style="width: 5rem;"> <br>
+    
+    <label for="">
+      <span>Max 
+        <img src="{% static 'icons/tipptaler/tipptaler14x14.png' %}" 
+        alt="Tipptaler" 
+        class="align-middle"
+        title="Tipptaler">
+      </span>
+    </label>
+    <input class="right" type="number" name="Max" style="width: 5rem;"> <br>
+    
+    <label for="">Sortieren nach:</label>
+    <select name="sortby" class="right" name="" id="" style="width: 5.5rem;">
+      <option value="-creation_date">Neuste</option>
+      <option value="creation_date">Älteste</option>
+      <option value="stake">Einsatz aufsteigend</option>
+      <option value="-stake">Einsatz absteigend</option>
+    </select>
+    {% if request.user.is_authenticated %}
+    <button id="applyfilter-btn" type="submit">Anwenden</button>
+    {% else %}
+    <a href="{% url 'login' %}"><button id="applyfilter-btn">Anwenden</button></a>
+    {% endif %}
+  </form>
+</section>
+
+<section id="betmodal" class="modal hide">
+  <div class="flex justify-between items-center">
+    <img src="{% static 'brand/logo_mobile_transparent.png' %}" alt="" width="38px">
+    <button id="betmodal-close" class="modal-close">⨉</button>
+  </div>
+  <div>
+    <h3 class="mt3" style="line-height: 2rem;">
+    <span id="modal_title_t1"></span>
+    <span class="right">
+      <img id="modal_img_t1" src="" height="22px" alt="">
+    </span>
+    <hr style="opacity: 0; padding: 0; margin: 0;">
+    <span id="modal_title_t2"></span>
+    <span class="right">
+      <img id="modal_img_t2" src="" height="22px" alt="">
+    </span>
+    </h3>
+    <hr>
+    <p  style="line-height: 2rem;">
+     <span>User:</span><span id="modal_user" class="right "></span><br>
+    <span>Tipp:</span>
+    <span class="right" id="modal_user_tipp_img">
+    </span> 
+    <br>
+    <span id="modal_user_tipp" class="w100 right-align inline-block">Mainz 05</span>
+    </p>
+    <hr>
+    <p style="line-height: 2rem;">
+      <span>Dein Tipp:</span>
+      <span class="right" id="modal_tipp_img">
+      </span>
+      <br>
+      <span id="modal_tipp" class="w100 right-align inline-block" style="line-height: 1.6rem;">
+       
+      </span>
+    </p>
+  </div>
+  
+ <button id="betnow-btn" hx-trigger="click throttle:1s" hx-post="{% url 'tipptafel_take_bet' %}"></button>
+</section>
+
+<section id="detailmodal" class="modal hide">
+  <div class="flex justify-between items-center">
+    <img src="{% static 'brand/logo_mobile_transparent.png' %}" alt="" width="38px">
+    <button id="detailmodal-close" class="modal-close">⨉</button>
+  </div>
+
+  <div>
+    <p style="line-height: 2rem;">
+      <span>Dein Tipp:</span>
+      <span class="right" id="dmodal_tipp_img">
+      </span>
+      <br>
+      <span id="dmodal_tipp" class="w100 right-align inline-block" style="line-height: 1.6rem;">
+    
+      </span>
+    </p>
+    <hr>
+    <p style="line-height: 2rem;">
+      <span>User:</span><span id="dmodal_user" class="right "></span><br>
+      <span>Tipp:</span>
+      <span class="right" id="dmodal_user_tipp_img">
+      </span>
+      <br>
+      <span id="dmodal_user_tipp" class="w100 right-align inline-block"></span>
+    </p>  
+    <hr>
+    <p style="line-height: 2rem;">
+      <span>Einsatz:</span><span class="right" id="dmodal_einsatz"></span><br>
+      <span>Status:</span><span class="right" id="dmodal_status"></span>
+    </p>
+    <hr>
+    <p>
+      <div class="copy-link ">
+        <input type="text" class="copy-link-input" readonly>
+        <button type="button" class="copy-link-button">
+          <span class="material-icons"><img src="{% static 'icons/copy-icon.png' %}" width="20px" alt=""></span>
+        </button>
+      </div>
+    </p>
+  </div>
+</section>
+<div class="overlay hide"></div>
+
+<dialog id="bet_placed_popup">
+  <div class="col col-12 center">
+    <span id="bet_placed_popup_txt"></span>
+  </div>
+  <div class="col col-12 center hide pt2 pb1">
+    <a hx-get="{% url 'deposit_funds' %}" 
+       hx-target="#page-content"
+       hx-push-url="true" 
+       class="unstyled hide" id="bet_placed_popup_aufladen"
+    >Aufladen <img src="{% static 'icons/up-arrow.png' %}" width="16px" class="align-top" alt=""></a>
+  </div>
+
+</dialog>
+
+
+
+{% block mobile_menu %}{% include 'core/blocks/mobile_menu.html' %}{% endblock mobile_menu %}
+{% block footer %}{% include 'core/blocks/footer.html' %}{% endblock footer %}
+<script src="{% static 'js/mobile_menu.js' %}"></script>
+<script src="{% static 'js/party.js' %}"></script>
+<script src="{% static 'js/htmx.js' %}"></script>
+<script src="{% static 'js/bl_widget_table.js' %}"></script>
+<script>
+  var img_tipp1 = "{% static 'icons/tipp/t1.svg' %}"
+  var img_tipp2 = "{% static 'icons/tipp/t2.svg' %}"
+  var img_tippx = "{% static 'icons/tipp/x.svg' %}"
+  var login_url = "{% url 'login' %}"
+  var inert = "{{ request.user.is_authenticated }}"
+  var spinner_url = "{% static 'icons/spinner.svg' %}"
+  var coin_img = document.createElement('img');
+  coin_img.src = "{% static 'icons/tipptaler/tipptaler16x16.png' %}"
+  coin_img.alt = '€';
+  coin_img.style.verticalAlign = "text-top"
+
+  var coin_img_yt = document.createElement('img');
+  coin_img_yt.src = "{% static 'icons/tipptaler/tipptaler16x16.png' %}" //yt border
+  coin_img_yt.alt = '€';
+  coin_img_yt.style.verticalAlign = "text-top"
+
+  const popup = document.querySelector("#bet_placed_popup")
+</script>
+<script src="{% static 'js/frame.js' %}"></script>
+<script>
+  document.body.addEventListener('htmx:configRequest', (event) => {
+    event.detail.headers['X-CSRFToken'] = '{{ csrf_token }}';
+  })
+</script>
+</body>
+</html>

@@ -1,0 +1,111 @@
+{% extends request.htmx|yesno:'core/empty.html,core/frame.html' %}
+{% load static %}
+{% load formatted_date %}
+{% load object_class_name %}
+{% block content %}
+
+{% if messages %}
+<div class=" border1 bg-yt mb2 pb3">
+  <h4 class="container-header">Bestätigung</h4>
+  {% for message in messages %}
+  <span class="px2">{{ message }}</span>
+  {% endfor %}
+</div>
+{% endif %}
+
+<div class="border1 bg-yt mb2 pb1 hide" id="zahlungsbestätigung">
+  <h4 class="container-header">Zahlungsbestätigung</h4>
+  <p class="px2" style="line-height: 1.8rem;">
+    Zahlung bestätigt! ✅ <br>
+    Die Zahlungsabwicklung kann einige Minuten dauern. <br>
+     Dein Guthabenstand wird in Kürze aktualisiert.
+  </p>
+</div>
+<div class="border1 clearfix bg-yt p0 m0 w100">
+  <h4 class="container-header">Mein Guthaben</h4>
+
+ <div class=" px1 rounded center">
+  <h1 class=" bg-three rounded pt1 pb1">{{ user.balance.amount.normalize }} <img src="{% static 'icons/tipptaler/tipptaler.png' %}" width="31px" class="align-top" alt="Tipptaler"></h1>
+ </div>
+
+ <div class="col col-12 my1 px1">
+    <button class="updown-btn"
+    hx-get="{% url 'deposit_funds'  %}"
+    hx-target="#page-content"
+    hx-push-url="true"
+    hx-indicator="#spinner"
+    style="background-color: var(--zero);"
+    >
+      <img width="14px" src="{% static 'icons/up-arrow.png' %}" alt="">
+    <span class="sm-hide xs-hide">Aufladen</span>
+    </button>
+
+    <button class="updown-btn"
+    hx-get="{% url 'withdraw'  %}"
+    hx-target="#page-content"
+    hx-push-url="true"
+    hx-indicator="#spinner"
+    >
+      <img width="14px" src="{% static 'icons/down-arrow.png' %}" alt="">
+      <span class="sm-hide xs-hide">Auszahlen</span>
+    </button>
+ 
+  </div>
+</div>
+
+<div class="border1 bg-yt p0 mt2 w100">
+    <h4 class="container-header">Zahlungshistorie</h4>
+    {% if transactions %}
+        <table class="paytable">
+          <thead>
+            <tr>
+              <th scope="col">Art</th>
+              <th scope="col">Datum</th>
+              <th scope="col"><img src="{% static 'icons/tipptaler/tipptaler.png' %}" alt="Tipptaler" width="20px"></th>
+              <th scope="col">Betrag</th>
+              <th scope="col">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for payment in transactions %}
+            {% if payment|object_class_name == "Withdrawal" %}
+            <tr>
+              <td data-label="Art">Auszahlung</td>
+              <td data-label="Datum">{{payment.date|formatted_date}}</td>
+              <td data-label="Tipptaler">{{payment.tt_amount.normalize}}</td>
+              <td data-label="Betrag">{{payment.withdraw_currency_amount}} {{payment.withdraw_currency}}</td>
+              <td data-label="Status">{{payment.get_status_display}}</td>
+            </tr>
+            {% else %}
+            <tr>
+              <td data-label="Art">Einzahlung</td>
+              <td data-label="Datum">{{payment.date|formatted_date}}</td>
+              <td data-label="Tipptaler">{{payment.tt_amount.normalize}}</td>
+              <td data-label="Betrag">{{payment.currency_amount}} {{payment.currency}}</td>
+              <td data-label="Status">{% if payment.deposit_unlocked %}Erledigt{%else%}Ausstehend{%endif%}</td>
+            </tr>
+            {% endif %}
+            {% endfor %}
+          </tbody>
+        </table>
+    {% else %}
+    <div class="w100 pb4">
+      <span class="w100 block center mb1 pt3" style="line-height: 2.5rem;">
+        <img src="{% static 'brand/icons/logo2.png' %}" class="align-middle mr1" width="40px" alt="" srcset=""> <br>
+        <span class="f22">Noch nichts hier... </span>
+      </span>
+    </div>
+    {% endif %}
+</div>
+
+<script>
+  function payment_confirmed(){
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has("zahlungsbestätigung")) {
+      var element = document.getElementById("zahlungsbestätigung");
+      element.classList.remove("hide");
+    }
+  }
+  payment_confirmed()
+</script>
+{% endblock content %}

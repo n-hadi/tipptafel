@@ -1,0 +1,224 @@
+{% extends request.htmx|yesno:'core/empty.html,core/frame.html' %}
+{% load static %}
+{% block content %}
+
+{% if messages %}
+{% for message in messages %}
+<div class=" border1 bg-yt mb2 pb3">
+  <h4 class="container-header">Fehlermeldung</h4>
+  <span class="px2">{{ message }}</span>
+  
+</div>
+{% endfor %}
+{% endif %}
+
+<div class="border1 bg-yt mb2 pb1" >
+  <h4 class="container-header">Information</h4>
+  <p class="px2" style="line-height: 1.8rem;">
+    Derzeit sind Ein- und Auszahlungen nur via Bitcoin möglich.
+  </p>
+</div>
+
+<div class="m0 mx-auto border1 bg-yt">
+  <h4 class="container-header">Auszahlen</h4>
+  <form action="" method="POST" id="withdraw_form" class="p0 m0">{% csrf_token %}
+
+      <div class="px1 center">
+        <h4 class="regular">Mein Guthaben:</h4>
+        <h1 class=" bg-three rounded pt1 pb1">
+          {{ user.balance.amount.normalize }} <img src="{% static 'icons/tipptaler/tipptaler.png' %}" width="31px"
+            class="align-top" alt="Tipptaler">
+      </div>
+      
+      <div class="px1 mb3">
+        <label class="mt3 ">Guthaben in Euro:</label>
+        <div class="input-icon mt2">
+          <input type="number" placeholder="{{ user.balance.amount.normalize }}€" disabled
+            style="padding-right:0; font-size:1.7em; border: none;">
+        </div>
+      </div>
+      
+      <div class="px1 mb2">
+        <label class="mt3">Dein Auszahlungsbetrag in Euro (€):</label>
+        <div class="input-icon mt2">
+          <input type="number" name="tt_amount" value="" step="0.01" required="" id="id_tt_amount"
+            style="padding-right:0; font-size:1.7em"
+            onkeyup="debounce(getConversion,1000)"
+            >
+        </div>
+      </div>
+
+      <div class="px1">
+        <label class="">Gebühr: 
+          <a href="{% url 'contact' %}#Gebuehren" target="_blank" class="right">
+              <img src="{% static 'icons/question-square-fill.svg' %}" alt="">
+          </a>
+        </label>
+        <div class="input-icon mt2">
+          <input type="text" disabled id="withdraw_fee"
+            style="padding-right:0; font-size:1.7em; border: none;">
+        </div>
+      </div>
+      
+      <div class="px1 mt3">
+        <fieldset class="rounded flex"
+          style="padding:25px; border:1px solid rgba(0, 0, 0, 0.297); background-color: var(--three);">
+          <legend style="background-color: white;border-radius: 4px; padding-left: 5px; padding-right: 5px;">Zahlungsmittel
+          </legend>
+          <div class="">
+            <label for="id_method_2">Bitcoin</label>
+            <input type="radio" name="id_method" id="id_method_2" onclick="toggleinputs('bitcoin','banktransfer')" checked>
+          </div>
+          <div class="ml3 hide">
+            <label for="id_method_1">Bank Transfer</label>
+            <input type="radio" name="id_method" id="id_method_1" onclick="toggleinputs('banktransfer','bitcoin')" disabled>
+          </div>
+      
+        </fieldset>
+        <div>
+        </div>
+      </div>
+
+      <div class="px1 mt3">
+        <label class="mt3 ">Du erhälst (₿):</label>
+        <div class="input-icon mt2">
+          <input type="text" id="btc-conversion" style="padding-right:0; font-size:1.7em; border: none;" disabled>
+        </div>
+      </div>
+
+      <div class="px1 mt3 center">
+        <span style="line-height: 1.8rem;">
+          <img src="{% static 'icons/triangle-fill.svg' %}" alt="" srcset=""> <br>
+          Stelle bitte sicher, dass du deine Bitcoin-Wallet-Adresse korrekt angibst! <br>
+          Wir können deine Bitcoins nicht wiedererlangen, nachdem sie versendet wurden.
+        </span>
+      </div>
+      
+      <div class="px1 mt2 bitcoin">
+        <label class="mt3 ">BTC Wallet Adresse:</label>
+        <div class="input-icon mt2">
+          <input type="text" name="payment_infos" maxlength="100" required="" id="id_payment_infos"
+            style="padding-right:0; padding-top: 0.5em; padding-bottom: 0.5em; font-size:1.3em">
+        </div>
+      </div>
+      
+      <div class="px1 mt3 banktransfer hide">
+        <label class="mt3 ">Kontoinhaber:</label>
+        <div class="input-icon mt2">
+          <input type="text" id="kontoinhaber_id" placeholder="Max Mustermann"
+            style="padding-right:0; padding-top: 0.5em; padding-bottom: 0.5em; font-size:1.3em">
+        </div>
+      </div>
+      
+      <div class="px1 mt3 banktransfer hide">
+        <label class="mt3 ">IBAN:</label>
+        <div class="input-icon mt2">
+          <input type="text" placeholder="DE12 3456 7891 2345 6789" id="iban_id"
+            style="padding-right:0; padding-top: 0.5em; padding-bottom: 0.5em; font-size:1.3em">
+        </div>
+      </div>
+
+      <div class="mb2">
+        <div class=" mt4 flex justify-center">
+          <button type="submit" class="login-btn" style="width: initial; border-width: 3px;">
+            Auszahlung anfordern
+          </button>
+        </div>
+      </div>
+
+  </form>
+
+
+</div>
+<script>
+
+    function toggleinputs(show,hide){
+      document.querySelectorAll('.'+show).forEach(el =>{el.classList.remove('hide')});
+      document.querySelectorAll('.' +hide).forEach(el => { el.classList.add('hide') })
+    }
+
+    function debounce(func, delay) {
+        try {
+          clearTimeout(debounceTimeout);
+        } catch {
+          true
+        }
+        debounceTimeout = setTimeout(func, delay);
+      }
+
+    function getConversion() {
+
+      // Get the input element and its value
+      var amountInput = document.getElementById("id_tt_amount");
+      var amountValue = amountInput.value - return_fee(amountInput.value);
+
+      // Construct the URL with the input value appended
+      var url = `https://blockchain.info/tobtc?currency=EUR&value=${amountValue}`;
+
+      // Make the fetch request
+      if(!Number.isNaN(parseFloat(amountValue))){
+        fetch(url)
+          .then(response => {
+            if (!response.ok) {
+              throw new Error(`Network response was not ok (status: ${response.status})`);
+            }
+            return response.text()
+          })
+          .then(data => {
+            document.getElementById("btc-conversion").value = data
+          })
+          .catch(error => {
+            console.error("Error:", error);
+          });
+      }
+      else{
+        document.getElementById("btc-conversion").value = 0;
+      }
+    }
+
+    function return_fee(tt_amount){
+      var fee_input = document.getElementById('withdraw_fee')
+      var fee = parseFloat(parseFloat(tt_amount * 0.05).toFixed(2))
+      if (fee > 5){
+        fee = 5
+      }
+      else if (fee < 0.5){
+        fee = 0;
+      }
+
+      fee_input.value = fee.toString() + '€'
+      return fee
+    }
+
+    var redirect_in_process = false;
+    document.getElementById('withdraw_form').addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        var tt_amount = document.getElementById('id_tt_amount').value;
+        var wallet_address = document.getElementById('id_payment_infos').value;
+        var valid_address = WAValidator.validate(wallet_address, 'bitcoin');
+
+
+        if(tt_amount > parseFloat('{{ user.balance.amount.normalize }}')){
+          alert("Der Auszahlungsbetrag darf nicht größer als {{ user.balance.amount.normalize }}€ sein")
+        }
+        else if(tt_amount <10){
+          alert("Der Auszahlungsbetrag muss größer als 10€ sein")
+        }
+        else if(!valid_address){
+          alert("Gib eine korrekte Bitcoin-Wallet-Adresse ein.")
+        }
+        else{
+          if (!redirect_in_process) {
+            //so users dont create too many withdrawals by repeadetly clicking
+            redirect_in_process = true
+            this.submit();
+          }
+        }
+
+
+      });
+</script>
+<script src="{% static 'js/wallet-address-validator.min.js' %}"></script>
+
+{% endblock content %}

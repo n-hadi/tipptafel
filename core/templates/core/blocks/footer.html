@@ -1,0 +1,58 @@
+{% load static %}
+<div class="clearfix footer mt4 w100 sm-hide xs-hide">
+ <div>
+  <h5 class="mb1 clr-zero">Informationen</h5>
+  <a class="cursor-pointer"
+   hx-get="{% url 'agb' %}" 
+   hx-target="#page-content" 
+   hx-push-url="true"
+  >AGB </a><br>
+  <a class="cursor-pointer"
+   hx-get="{% url 'agb' %}" 
+   hx-target="#page-content" 
+   hx-push-url="true"
+  >Datenschutzrichtlinien</a><br>
+  <a class="cursor-pointer"
+   hx-get="{% url 'agb' %}" 
+   hx-target="#page-content" 
+   hx-push-url="true"
+  >Spielschutz</a>
+ </div>
+ <div>
+  <h5 class="mb1 clr-zero">Über uns</h5>
+  <a class="cursor-pointer" 
+   hx-get="{% url 'contact' %}" 
+   hx-target="#page-content" 
+   hx-push-url="true"
+  >Wer wir sind</a><br>
+  <a class="cursor-pointer"
+   hx-get="{% url 'contact' %}" 
+   hx-target="#page-content" 
+   hx-push-url="true"
+  >Impressum</a>
+
+
+ </div>
+ <div>
+  <h5 class="mb1 clr-zero">Kontakt</h5>
+  <a class="cursor-pointer"
+   hx-get="{% url 'contact' %}" 
+   hx-target="#page-content" 
+   hx-push-url="true"
+  >Hilfe</a><br>
+  <a class="cursor-pointer"
+   hx-get="{% url 'contact' %}" 
+   hx-target="#page-content" 
+   hx-push-url="true"
+  >Häufig gestellte Fragen</a>
+
+
+
+ </div>
+ <div>
+  <h5 class="mb1 clr-zero">Zahlungsmittel</h5>
+  <img src="{% static 'icons/zahlungsmittel.png' %}" width="" alt="">
+
+ </div>
+
+</div>

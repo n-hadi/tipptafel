@@ -1,0 +1,244 @@
+{% extends request.htmx|yesno:'core/empty.html,core/frame.html' %}
+{% block content %}
+
+<div class="border1 bg-yt mb1">
+ <h5 class="container-header" id="kontakt">Kontakt</h5>
+ <div class="px2 pb2 lheight2">
+  Wenn du Fragen hast oder Hilfe benötigst, schreib uns einfach eine E-Mail: <br> 
+  <span class="bold">service@tipptafel.de</span> <br>
+   Wir sind gerne für dich da!
+  
+ </div>
+</div>
+
+<div class="border1 bg-yt mb1">
+ <h5 class="container-header">HÄUFIG gestellte Fragen</h5>
+ <div class="px2 pb3">
+
+    
+  <div class="faq-main">
+
+    <div class="w100 center">
+      <h4>Allgemeines</h4>
+    </div>
+
+   <div class="faq-item">
+    <div class="faq-title full-border-radius" onclick="toggle_faq(this)">
+     <h5>Wie funktioniert Peer-to-Peer-Wetten?</h5> 
+    </div>
+    <div class="faq-body hide">
+     Peer-to-Peer-Wetten ermöglichen es dir, direkt mit anderen Nutzern zu wetten, ohne einen Buchmacher zu nutzen. <br> Du kannst Wetten platzieren oder annehmen und deine eigenen Einsätze und Quoten festlegen, also quasi selbst zum Buchmacher werden.
+    </div>
+   </div>
+
+   <div class="faq-item">
+    <div class="faq-title full-border-radius" onclick="toggle_faq(this)">
+     <h5>Was sind Tipptaler?</h5>
+    </div>
+    <div class="faq-body hide">
+     Tipptaler sind die plattformspezifische Währung auf <i>Tipptafel</i>.  <br>
+     <span class="bold">
+      Ein Tipptaler entspricht immer einem Euro.
+     </span>  <br>
+     Wir verwenden Tipptaler, um Nutzern unabhängig von ihrem Standort und ihrer Währung die Möglichkeit zu
+     geben, miteinander zu wetten. Dies ermöglicht eine nahtlose und unkomplizierte Wettabwicklung über Ländergrenzen hinweg, ohne sich um
+     Währungsunterschiede kümmern zu müssen. Tipptaler erleichtern das Wetten und die Interaktion und
+     bieten eine einfache Möglichkeit, Wetten zu platzieren und Gewinne zu verwalten. <br> Damit wird das Wetten bei <i>Tipptafel</i> noch
+     bequemer und benutzerfreundlicher.
+    </div>
+   </div>
+
+   <div class="faq-item">
+    <div class="faq-title full-border-radius" onclick="toggle_faq(this)">
+     <h5>Wie funktioniert das Wettsystem auf Tipptafel?</h5>
+    </div>
+    <div class="faq-body hide" id="wettsystem">
+     Hier ist eine kurze Erläuterung, wie es funktioniert:
+     <br><br>
+     <span class="panton mr1">1.</span> Jedes ordinäre Fußballspiel hat immer einen der drei möglichen Ausgänge: <br>
+     <ul>
+      <li>Team 1 gewinnt</li>
+      <li>Team 2 gewinnt</li>
+      <li>Unentschieden</li>
+     </ul>
+     <br>
+     <span class="panton mr1">2.</span> Auf <i>Tipptafel</i> können Nutzer Wetten erstellen und ihren Einsatz selbst frei wählen. <br>
+     Wettersteller tippen auf einen bis zwei der drei möglichen Ausgänge. Zum Beispiel kann ein Nutzer darauf wetten, dass
+     entweder Team 1 gewinnt oder das Spiel in
+     einem Unentschieden endet, und beispielsweise 20 Tipptaler darauf setzen.
+     <br><br>
+     <span class="panton mr1">3.</span> Ein anderer Nutzer, der die Wette annimmt – der Kontrahent – wettet immer auf den
+     verbleibenden möglichen Ausgang
+     bzw. den verbleibenden möglichen Ausgängen. In diesem
+     Beispiel würde der Kontrahent auf „Team 2 gewinnt“ tippen, da der Wettersteller bereits die Ausgänge „Team 1 gewinnt“
+     und „Unentschieden“ beansprucht.
+     <br><br>
+     <span class="panton mr1">4.</span> Wenn das Ergebnis feststeht: <br>
+     <ul class="ml2">
+      <li>
+       Wenn Team 1 gewinnt, oder es unentschieden ausgeht, erhält in unserem Beispiel der Wettersteller seinen Einsatz zurück sowie den Einsatz
+       des
+       Kontrahenten. <br> Also insgesamt 40 Tipptaler.
+      </li>
+      <li>
+       Wenn Team 2 gewinnt, erhält der Kontrahent die 40 Tipptaler.
+      </li>
+     </ul>
+     <br>
+     <span class="panton mr1">5.</span> In Spielen, die nicht unentschieden enden können, kann nur auf ein Team gewettet
+     werden.
+    </div>
+   </div>
+
+   <div class="faq-item">
+    <div class="faq-title full-border-radius" onclick="toggle_faq(this)">
+     <h5>Wie werden die Quoten festgelegt?</h5>
+    </div>
+    <div class="faq-body hide">
+     Derzeit werden auf <i>Tipptafel</i> nur Peer-to-Peer-Festwetten und keine Quotenwetten angeboten.
+     Ergo, können Nutzer nur einen festen Einsatz pro Wette setzen.
+     Jedoch ist geplant, in naher Zukunft auch Quotenwetten auf <i>Tipptafel</i> anzubieten.
+    </div>
+   </div>
+
+   <div class="faq-item">
+    <div class="faq-title full-border-radius" onclick="toggle_faq(this)">
+     <h5>Wie platziere ich eine Wette?</h5>
+    </div>
+    <div class="faq-body hide">
+     Um auf offene Wetten anderer Nutzer zu wetten, navigiere unter „Wette suchen“ zum Abschnitt „Tipptafel“. Klicke auf
+     den „Tippen!“-Button und bestätige die Wette anschließend im Popup. <br>
+     Um eine oder mehrere Wetten zu erstellen, navigiere unter „Wette erstellen“ zur gewünschten
+     Sportveranstaltung. Es werden dir nun kommende Spiele für dein ausgewähltes Turnier angezeigt, wo du deinen Wetttipp
+     und
+     deinen Einsatz pro Spiel abgeben kannst.
+    </div>
+   </div>
+
+   <div class="faq-item">
+    <div class="faq-title full-border-radius" onclick="toggle_faq(this)">
+     <h5>Was passiert, wenn niemand meine Wette annimmt?</h5>
+    </div>
+    <div class="faq-body hide">
+     Wenn für deine Wette kein Kontrahent/Nutzer gefunden wird, erhälst du deinen Einsatz vollständig zurückerstattet.
+    </div>
+   </div>
+
+   <div class="faq-item">
+    <div class="faq-title full-border-radius" onclick="toggle_faq(this)">
+     <h5>Was passiert bei einem Unentschieden oder einer Absage?</h5>
+    </div>
+    <div class="faq-body hide">
+   
+     Bei einem Unentschieden oder einer Absage eines Spiels gelten folgende Regeln:
+     <ul>
+      <li>
+       <span class="bold">Unentschieden</span>: <br>
+       <p>
+        Wenn das Spiel mit einem Unentschieden endet, gewinnt der Wettende, der auf „Unentschieden“ getippt hat. <br>
+        Siehe: <i><a onclick="show_wettsystem()" style="text-decoration: underline; color: blue; cursor: pointer;">Wie
+          funktioniert das Wettsystem auf Tipptafel?</a></i>
+       </p>
+      </li>
+   
+      <li>
+       <span class="bold">Absage oder Spielabbruch</span>: <br>
+       <p>
+        Falls ein Spiel abgesagt oder abgebrochen wird erhalten die Nutzer ihre Einsätze wieder
+        zurückerstattet. In solchen Fällen wird die Wette annulliert, und die
+        eingesetzten Tipptaler werden den Nutzern zurückgegeben. <br>
+        Wenn ein Spiel im Nachhinein für ungültig erklärt wird, erfolgt in der Regel eine Rückerstattung des verlorenen
+        Einsatzes an den Verlierer der Wette, während das Guthaben des Gewinners um den Einsatz des Kontrahenten reduziert
+        wird. <br>
+        Es sei jedoch darauf hingewiesen, dass in solchen Fällen je nach Besonderheit der Spielkontexte andere individuelle
+        Entscheidungen von
+        uns getroffen werden können.
+       </p>
+      </li>
+     </ul>
+   
+   
+     Wir möchten sicherstellen, dass unsere Nutzer fair behandelt werden, selbst wenn es zu unvorhergesehenen Ereignissen
+     wie
+     einer Absage oder einem Spielabbruch kommt. <br> Bei solchen Situationen ist die Rückerstattung der Einsätze unsere
+     Standardpraxis, um Transparenz und Fairness zu gewährleisten.
+    </div>
+   </div>
+
+    <div class="faq-item">
+      <div class="faq-title full-border-radius" onclick="toggle_faq(this)">
+        <h5>Kann ich eine Wette stornieren?</h5>
+      </div>
+      <div class="faq-body hide">
+        Das Stornieren von Wetten ist nicht möglich.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-title full-border-radius" onclick="toggle_faq(this)">
+        <h5>Wie erstelle ich ein Konto?</h5>
+      </div>
+      <div class="faq-body hide">
+        Du kannst ein Konto erstellen, indem du auf der Startseite der Webseite oder oben Rechts in der Navigationsleiste
+        auf
+        „Registrieren“ klickst und den Anweisungen folgst.
+      </div>
+    </div>
+
+    <div class="w100 center pt2">
+      <h4 id="Gebuehren">Zahlungen</h4>
+    </div>
+   
+   <div class="faq-item">
+    <div class="faq-title full-border-radius" onclick="toggle_faq(this)">
+     <h5>Wie zahle ich Geld ein?</h5>
+    </div>
+    <div class="faq-body hide">
+     Logge dich ein und wähle in der Seitenleiste die Option „Zahlungen“.
+     Klicke auf den „Guthaben aufladen“-Button und gib an wieviele Tipptaler du kaufen möchtest.
+     Nachdem du dies gemacht hast, akzeptiere die allgemeinen Geschäftsbedingungen und bestätige die Zahlung.
+     Anschließend wirst du zu <i>BTC Pay</i> weitergeleitet wo dir der Kaufpreis in Bitcoin, sowie die Bitcoin-Wallet-Addresse für die Überweisung angezeigt werden.
+    </div>
+   </div>
+   
+   <div class="faq-item">
+    <div class="faq-title full-border-radius" onclick="toggle_faq(this)">
+     <h5>Wie zahle ich meine Gewinne aus?</h5>
+    </div>
+    <div class="faq-body hide">
+     Wähle unter „Zahlungen“ den Button „Auszahlen“ aus und folge den Anweisungen. 
+     Momentan sind Ein- und Auszahlungen nur via Bitcoin möglich.
+    </div>
+   </div>
+
+   <div class="faq-item">
+    <div class="faq-title full-border-radius" onclick="toggle_faq(this)">
+     <h5>Welche Gebühren und Provisionen gibt es?</h5>
+    </div>
+    <div class="faq-body hide">
+     Die Platzierung und Annahme von Wetten sowie Einzahlungen sind kostenlos.
+     Lediglich bei der Auszahlung von Guthaben erhebt <i>Tipptafel</i> eine Gebühr in Höhe von 5% des Auszahlungsbetrags. Für Auszahlungsbeträge über 100€ wird allgemein eine feste Gebühr von 5€ berechnet.
+    </div>
+   </div>
+   
+  </div>
+
+ </div>
+</div>
+<script>
+ function toggle_faq(el){
+  el.classList.toggle("full-border-radius")
+  var faq_body = el.nextElementSibling;
+  faq_body.classList.toggle('hide');
+ }
+ function show_wettsystem(){
+  el = document.getElementById("wettsystem")
+  el.classList.remove("hide")
+  el.scrollIntoView({
+   behavior: "smooth",
+   block: "start",
+   inline: "nearest"
+  });
+ }
+</script>
+{% endblock content %}

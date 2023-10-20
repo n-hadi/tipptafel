@@ -1,0 +1,44 @@
+{% load static %}
+<nav class="clearfix sticky" style="box-shadow: 0 4px 2px -5px rgb(0, 0, 0);">
+ <div class="sm-col lg-col-8 md-col-7  sm-col-8">
+  <a href="{% url 'index' %}">
+   <img class="left brand-logo" src="{% static 'brand/logo_sm.png' %}" alt="">
+  </a>
+ </div>
+ <div class=" lg-col-4 md-col-5 sm-hide xs-hide right">
+  {% if user.is_authenticated %}
+    <div class="sm-hide xs-hide pr2">
+     <a 
+      hx-get="{% url 'mybets' %}"
+      hx-trigger="click"
+      hx-target="#page-content"
+      hx-swap="innerHTML"
+     class="f14 right" style="margin-top: 0.6rem;">
+      <img src="{% static 'icons/person-circle.svg' %}" alt="" class="" width="30px">
+     </a>
+    </div>
+  {% else %}
+  <div class="right mt2 mr2 sm-hide xs-hide">
+   <a href="{% url 'register' %}" class="register-btn f15">Registrieren</a>
+  </div>
+  <div class="right mt2 mr2 sm-hide xs-hide">
+   <a href="{% url 'login' %}" class="btn f15" style="border: 1px solid rgba(0, 0, 0, 0.256);">Einloggen</a>
+  </div>
+   {% endif %}
+ </div>
+ <div class="md-hide lg-hide sm-col sm-col-4 pr2">
+  <a 
+  {% if user.is_authenticated %}
+    hx-get="{% url 'mybets' %}"
+    hx-trigger="click"
+    hx-target="#page-content"
+    hx-swap="innerHTML"
+  {% else %}
+   href="{% url 'login' %}"
+  {% endif %}
+  >
+   <img src="{% static 'icons/person-circle.svg' %}" alt="" class="lg-hide md-hide right" width="30px"
+    style="margin-top: 0.6em;">
+  </a>
+ </div>
+</nav>

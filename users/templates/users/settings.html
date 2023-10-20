@@ -1,0 +1,68 @@
+{% extends request.htmx|yesno:'core/empty.html,core/frame.html' %}
+{% block content %}
+
+{% if messages %}
+  {% for message in messages %}
+   {% if message.tags == 'success' %}
+    <div class="border1 bg-yt mb2 pb3">
+      <h4 class="container-header">Bestätigung</h4>
+      <span class="px2">{{ message }}</span>
+      </div>
+    {% elif message.tags == 'error' %}
+    <div class="border1 bg-yt mb2 pb3">
+      <h4 class="container-header">Fehlermeldung</h4>
+      <span class="px2">{{ message|escape }}</span>
+    </div>
+    {% endif %}
+  {% endfor %}
+{% endif %}
+
+<div class="border1 bg-yt m0 w100">
+ <h4 class="container-header">Einstellungen</h4>
+
+ <div class="col-12 center">
+  <form action="{% url 'changemail' %}" method="POST">
+    {% csrf_token %}
+    <h3 class="mb3">E-Mail Adresse ändern</h3>
+    <span>Aktuelle E-Mail:</span>
+    <br>
+    <input type="text" class="crispy-input mb1" style="border: 1px solid rgba(0, 0, 0, 0.143); background-color: rgba(0, 0, 0, 0.082); color: white;" placeholder="{{ user.email }}" disabled>
+    <br> <br>
+    <span>Neue E-Mail:</span>
+    <br>
+    <input class="crispy-input mb1 bg-three" style="border: 1px solid rgba(0, 0, 0, 0.143);"
+    type="email" name="email" maxlength="254" required="" id="id_email"
+    >
+    <br>
+    <button type="submit" class="btn center" style="border: 1px solid rgba(0, 0, 0, 0.224); margin-top: 1rem; margin-bottom: 1rem;background-color: black; color: white;">
+     Bestätigen
+    </button>
+  </form>
+ </div>
+ <hr style="border-color: rgba(255, 255, 255, 0.283)">
+
+ <div class="col-12 pb3 mt3 center">
+   <form action="{% url 'changepw' %}" method="POST">
+    {% csrf_token %}
+   <h3 class="mb3">Passwort ändern</h3>
+   <span>Altes Passwort:</span> <br>
+   <input  type="password" name="old_password" autocomplete="current-password"  required id="id_old_password" class="crispy-input bg-three mb1 inline-block" style="border: 1px solid rgba(0, 0, 0, 0.143);"> <br> <br>
+   <span>Neues Passwort:</span>
+   <br>
+   <input type="password" class="crispy-input bg-three mb1 inline-block" style="border: 1px solid rgba(0, 0, 0, 0.143);" name="new_password1" autocomplete="new-password" required id="id_new_password1">
+   <br> <br>
+   <span>Passwort bestätigen:</span>
+   <br>
+   <input type="password" class="crispy-input bg-three mb1 inline-block" style="border: 1px solid rgba(0, 0, 0, 0.143);"
+   name="new_password2" autocomplete="new-password" required="" id="id_new_password2"
+   >
+   <br>
+   <button class="btn center" style="border: 1px solid rgba(0, 0, 0, 0.224); margin-top: 1rem; background-color: black; color: white;"
+   >
+    Bestätigen
+   </button>
+  </form>
+
+</div>
+</div>
+{% endblock content %}

@@ -1,0 +1,73 @@
+{% extends request.htmx|yesno:'core/empty.html,core/frame.html' %}
+{% load static %}
+{% block content %}
+{% if messages %}
+<div class="border1 bg-yt mb2 pb3">
+      <h4 class="container-header">Fehlermeldung</h4>
+      {% for message in messages %}
+      <span class="px2">{{ message }}</span>
+      {% endfor %}
+</div>
+{% endif %}
+<div class="border1 bg-yt m0 pb3">
+   <h4 class="container-header">Wette erstellen!</h4>
+  <div class="px2">
+   <fieldset class="bg-three mb3" style="border: 1px solid var(--three); border-radius: 10px;min-inline-size:0">
+      <legend class="bg-yt rounded ">Turnier auswählen</legend>
+      <div class="liga-select">
+         <div class="carousel-container">
+            <div class="inner-carousel">
+               <div class="track">
+                  {% for tournament in tournaments %}
+                     <div class="card-container">
+                        <div class="card">
+                           <button class="liga-btn" style="background-color:white; max-width: 100px;"
+                              hx-get="{% url 'upcoming_games' liga=tournament.name %}" hx-target="#upcoming_games" hx-indicator="#content_spinner"
+                              onclick="document.querySelector('#upcoming_games_wrap').classList.remove('hide')"
+
+                              >
+                              <img src="{{ tournament.img.url }}" style="width: 100%;" alt="{{tournament.name}}" srcset=""
+                              >
+                           </button>
+                        </div>
+                     </div>
+                  {% endfor %}
+               </div> 
+               <div class="carousel-nav">
+                  <button class="carousel-prev pr1"
+                  onclick="prev()"
+                  >
+                     <img src="{% static 'icons/chevron/left.png' %}" width="12px" alt="">
+                  </button>
+                  <button class="carousel-next pl1"
+                  onclick="next()"
+                  >
+                  <img src="{% static 'icons/chevron/right.png' %}" width="12px" alt=""></button>
+               </div>
+            </div>
+         </div>
+
+      </div>
+   </fieldset>
+    
+   </div>
+</div>
+
+<div class="border1 bg-yt mt2 pb3 hide" id="upcoming_games_wrap">
+   <h4 class="container-header">Kommende Partien</h4>
+   <div class="px1">
+
+
+      <div class="m0 p0" id="upcoming_games">
+
+      </div>
+
+
+   </div>
+</div>
+<script>
+   var guthaben = Number('{{ request.user.balance.amount }}')
+</script>
+<script src="{% static 'js/create_bet.js' %}"></script>
+<script src="{% static 'js/create_bet_carousel.js' %}"></script>
+{% endblock content %}

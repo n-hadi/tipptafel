@@ -1,0 +1,90 @@
+{% load static %}
+{% load i18n %}
+
+
+{% if matches %}
+<table class="gametable">
+  <thead>
+    <th>T1</th>
+    <th>T2</th>
+    <th data-label="Auswahl">Auswahl</th>
+    <th data-label="Einsatz">Einsatz <img src="{% static 'icons/tipptaler/tipptaler18x18.png' %}" alt="Tipptaler" style="vertical-align:sub;" title="Tipptaler"></th>
+  </thead>
+  <tbody>
+    {% for game in matches %}
+    {% ifchanged game.start|date:"d.m" %}
+    <tr>
+      <td colspan="4">
+        <span class="p0 m0 f15" style="border-bottom: 1px dashed #efefef;">
+          {% language 'de' %}{{game.start |date:"D, d.m"}}{% endlanguage %}
+        </span>
+      </td>
+    </tr>
+    {% endifchanged %}
+    <tr>
+      <td data-label="t1">
+        <img class="align-middle" src="{{ game.t1.logo_sm.url }}" height="25px" alt="">
+        <span class="align-middle">{{ game.t1.short_name }}</span>
+      </td>
+      <td data-label="t2">
+        <img class="align-middle" src="{{ game.t2.logo_sm.url }}" height="25px" alt="">
+        <span class="align-middle">{{ game.t2.short_name }} </span>
+      </td>
+      <td data-label="Auswahl" class="td-auswahl">
+        <button onclick="checkit(this)" class="tbtn" data-team="t1" data-gameid="{{game.identifier}}">
+          <span class="align-middle">T1</span>
+        </button>
+        {% if not game.draw_impossible %}
+        <button onclick="checkit(this)" class="tbtn draw" data-team="x" data-gameid="{{game.identifier}}">
+          x
+        </button>
+        {% endif %}
+        <button onclick="checkit(this)" class="tbtn" data-team="t2" data-gameid="{{game.identifier}}">
+          T2
+        </button>
+      </td>
+      <td data-label="Einsatz">
+        <input class="einsatz_input" onkeyup="uncheckterms()" onchange="twodecimals(this)" type="number"
+          data-gameid="{{game.identifier}}" placeholder="0">
+      </td>
+    </tr>
+    {% endfor %}
+    <tr class="bg-three">
+      <td colspan="3" style="border-top: 1px solid #ebebeb;">Summe <img src="{% static 'icons/tipptaler/tipptaler18x18.png' %}" alt="Tipptaler" title="Tipptaler" class="align-middle"> :</td>
+      <td style="text-align: center; border-top: 1px solid #ebebeb;" colspan="1">
+        <input type="number" id="einsatz_summe" disabled placeholder="0">
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="col-12 center mt3">
+  <input type="checkbox" name="terms" id="accept_terms"> Ich akzeptiere die <a href="">AGB</a>.
+</div>
+<div class="col-12 center">
+  <form action="" id="bets_form" method="POST">
+    {% csrf_token %}
+    {% for game in matches %}
+    <fieldset class="hide">
+      <input type="checkbox" class="tinput" name="{{game.identifier}}" value="t1">
+      <input type="checkbox" class="tinput" name="{{game.identifier}}" value="t2">
+      {% if not game.draw_impossible %}
+      <input type="checkbox" class="tinput" name="{{game.identifier}}" value="x">
+      {% endif %}
+      <input type="number" class="stake_input" name="{{game.identifier}}" id="id_stake_{{game.identifier}}">
+    </fieldset>
+    {% endfor %}
+
+    <button onclick="beforesubmit(event)" class="place-btn mt3">
+      <img src="{% static 'brand/logo_mobile_transparent_yt.png' %}" width="30px" alt="" class="align-middle"
+        style="transform: rotate(220deg);">
+      <span class="align-middle">Wette platzieren!</span>
+    </button>
+  </form>
+</div>
+
+{% else %}
+<span class="pl1">Keine kommenden Spiele.</span>
+
+{% endif %}
+

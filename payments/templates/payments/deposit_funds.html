@@ -1,0 +1,223 @@
+{% extends request.htmx|yesno:'core/empty.html,core/frame.html' %}
+{% load static %}
+{% block content %}
+
+{% if messages %}
+<div class=" border1 bg-yt mb2 pb3">
+  <h4 class="container-header">Fehlermeldung</h4>
+  {% for message in messages %}
+  <span class="px2">{{ message }}</span>
+  {% endfor %}
+</div>
+{% endif %}
+
+<div class="border1 bg-yt mb2 pb1">
+  <h4 class="container-header">Information</h4>
+  <p class="px2" style="line-height: 1.8rem;">
+    Derzeit sind Ein- und Auszahlungen nur via Bitcoin möglich.
+  </p>
+</div>
+
+
+<div class="border1 pb2 bg-yt m0 mx-auto">
+  <h4 class="container-header">GUTHABEN<span class="clr-four"> AUFLADEN</span></h4>
+ 
+  <div class="center px1 lg-hide md-hide">
+    <h4 class="regular">Mein Guthaben:</h4>
+    <h1 class=" bg-three py1 rounded">
+      {{ user.balance.amount.normalize }} <img src="{% static 'icons/tipptaler/tipptaler.png' %}" width="31px"
+        class="align-top" alt="Tipptaler">
+    </h1>
+  </div>
+  
+ <div class="flex flex-wrap justify-around p2 mt4">
+  <button class="credit-btn center border1 py1 bg-three hover-up transition-ease rounded cursor-pointer" style=" width: 130px;" value="20">
+  <img src="{% static 'pics/design/deposit_auswahl/20tt.png' %}"  style="height: 30px;" alt="" srcset="">
+  </button>
+  <button class="credit-btn center border1 py1 bg-three hover-up transition-ease rounded cursor-pointer" style=" width: 130px;" value="50">
+    <img src="{% static 'pics/design/deposit_auswahl/50tt.png' %}"  style="height: 30px;" alt="" srcset="">
+
+  </button>
+  <button class="credit-btn center border1 py1 bg-three hover-up xs-hide transition-ease rounded cursor-pointer" style=" width: 130px;" value="100">
+    <img src="{% static 'pics/design/deposit_auswahl/100tt.png' %}"  style="height: 30px;" alt="" srcset="">
+  </button>
+ </div>
+
+ <form action="" id="deposit_amount_form" class="mt4" method="post">
+  {% csrf_token %}
+    <div class="px1">
+      <h5 class="center">Einzahlungsbetrag</h5>
+
+      <div class="tt-input-wrap mt2 ">
+        <input type="number" class="no-arrows" onkeyup="delayedFunction(this)" placeholder="" id="id_credit" name="id_credit" >
+        <i> 
+          <img src="{% static 'pics/design/deposit_auswahl/tt_flat_3d.png' %}">
+        </i>
+      </div>
+    </div>
+    <div class="clearfix px1 mb4 center" style="line-height: 2.5rem;">
+      <h5 class="mb1 mt4">Umrechnung</h5>
+      <div class="col col-12 center">
+        <input class="tt_price_compare_input" disabled type="text">
+      </div>
+      <div class="col col-12 center py1">
+        <input class="tt_price_compare_input" style="font-size: 17px;" disabled type="text">
+      </div>
+
+    </div>
+    <div class="px1 center" style="margin-top: 4rem;">
+      <input type="checkbox" name="terms" id="accept_terms">Durch diese Einzahlung akzeptierst du die <a href="">AGB</a>.
+    </div>
+  <div class="w100 justify-center mb3 flex" style="margin-top: 2.3rem;">
+    <button class="clr-yt f14 inline hover-up" 
+    style="padding: 0.7rem 2rem 0.7rem 2rem; 
+           background-color: #0e3b21;
+           border:none;
+           border-radius: 4px;
+           box-shadow: 1px 1px 7px rgba(0, 0, 0, 0.544);
+           cursor: pointer;
+           transition: 0.2s ease-in-out;
+           " 
+           type="submit">
+      <img src="{% static 'icons/weiter_mit.webp' %}" width="55px" class="align-middle" alt="" srcset="">
+      <img src="{% static 'icons/btcpay-logo-white-txt.svg' %}" width="65px" class="ml1 mr0 align-middle" alt="" srcset="">
+    </button>
+    </div>
+
+ </form>
+
+<dialog id="welcome_dialog">
+  <h4 class="container-header" style="margin-left: 0;">Willkommen!</h4>
+  <div class="w100" style="max-width: 800px; line-height: 2em;">
+    <p>
+      Herzlich willkommen bei Tipptafel! <br>
+    
+      Du bist bereits angemeldet. Alles, was du jetzt noch tun musst, ist, Geld auf dein Konto einzuzahlen, um loszulegen.
+    </p>
+    <ol style="line-height: 2.3em;">
+      <li>Wähle aus wieviele Tipptaler du kaufen möchtest und bestätige die Einzahlung. <br style="line-height: 0.2em;">
+        (Ein Tipptaler entspricht immer einem Euro.)</li>
+      <li>Du wirst zu BTC Pay weitergeleitet, wo dir eine Bitcoin-Adresse und ein QR-Code für die Transaktion angezeigt werden.
+      </li>
+    </ol>
+    <p>
+      Sobald du Guthaben hast, kannst du sofort mit dem Wetten beginnen. <br>
+      Danke, dass du Tipptafel nutzt und viel Erfolg!
+    </p>
+  </div>
+  <div class="w100 center mt3 mb2">
+    <button class="center aufladen-btn" style="padding: 0.6rem">Verstanden</button>
+  </div>
+</dialog>
+
+<script>
+  const welcome_dialog = document.querySelector("#welcome_dialog");
+
+    const closeWelcomeButton = document.querySelector("#welcome_dialog button");
+
+    closeWelcomeButton.addEventListener("click", () => {
+      welcome_dialog.close();
+    });
+    var queryString = window.location.search;
+    var searchParams = new URLSearchParams(queryString);
+    if (searchParams.has("dialog")) {
+      welcome_dialog.showModal();
+    }
+</script>
+<script>
+ var user_redirect_in_process = false
+ var credit_input = document.getElementById('id_credit')
+
+ var credit_btns = document.getElementsByClassName('credit-btn')
+ var conversion = document.getElementsByClassName("tt_price_compare_input")
+  for (let i = 0; i < credit_btns.length; i++) {
+   credit_btns[i].addEventListener('click', function (e) {
+    uncheck()
+    var nmbr =  this.value
+    credit_input.value = nmbr
+    change_values(nmbr)
+   })
+  }
+  function validate(el){
+     el.value = parseFloat(parseFloat(el.value).toFixed(2));
+    if (el.value < 0) {
+      el.value = 0;
+    }
+    el.innerHTML = el.value
+    change_values(el.value)
+
+  }
+
+  function uncheck(){
+    var checkbox = document.getElementById("accept_terms")
+    if (checkbox.checked == true){
+      checkbox.click()
+    }
+  }
+
+  function change_values(eur_value){
+    conversion[0].value = eur_value + "€"
+    getConversion(eur_value)
+  }
+
+  function getConversion(EUR) {
+
+      // Construct the URL with the input value appended
+      var url = `https://blockchain.info/tobtc?currency=EUR&value=${EUR}`;
+
+      // Make the fetch request
+      if (!Number.isNaN(parseFloat(EUR))) {
+        fetch(url)
+          .then(response => {
+            if (!response.ok) {
+              throw new Error(`Network response was not ok (status: ${response.status})`);
+            }
+            return response.text()
+          })
+          .then(data => {
+            conversion[1].value = data + " BTC"
+          })
+          .catch(error => {
+            console.error("Error:", error);
+          });
+      }
+      else {
+        conversion[1].innerHTML = 0;
+      }
+    }
+
+  let delayTimer;
+  function delayedFunction(el) {
+    uncheck()
+    clearTimeout(delayTimer);
+
+    // Set a new timer to delay the function by 500 milliseconds (adjust as needed)
+    delayTimer = setTimeout(function () {
+      validate(el);
+    }, 500); // 500 milliseconds (0.5 seconds) delay
+  }
+
+
+
+  document.getElementById('deposit_amount_form').addEventListener('submit', function (e) {
+      e.preventDefault(); 
+
+      var myInput = document.getElementById('id_credit');
+
+      var inputValue = myInput.value;
+
+      if (inputValue !== '' && !isNaN(inputValue) && parseFloat(inputValue) >= 5) {
+        if (!user_redirect_in_process){ 
+        //so users dont create too many invoices by repeadetly clicking
+        user_redirect_in_process = true
+        this.submit();
+        }
+      } else {
+        alert('Der Mindesteinzahlungsbetrag muss mindestens 5€ bzw. 5 Tipptaler betragen.');
+      }
+    });
+
+  
+</script>
+</div>
+{% endblock content%}

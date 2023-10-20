@@ -1,0 +1,58 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" style="max-width: none;">
+<head>
+ <meta charset="UTF-8">
+ <meta http-equiv="X-UA-Compatible" content="IE=edge">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>Tipptafel | Registrieren</title>
+ <link rel="stylesheet" href="{% static 'css/bass.css' %}">
+ <link rel="stylesheet" href="{% static 'css/style.css' %}">
+ <link rel="shortcut icon" href="{% static 'brand/favicon/favicon.ico' %}" type="image/x-icon">
+</head>
+<body class="register-body">
+  <div class="center" style="width: 1600px;">
+    <img src="{% static 'brand/logo_sm.png' %}" alt="">
+    {% if form.errors %}
+    <div class="md-col-6 lg-col-5 mx-auto bg-yt p2 pt0 mt3 border1"
+      style=" box-shadow: 0 2px 20px rgba(0, 0, 0, 0.355); min-width: 270px;">
+      <h4 class="container-header">Fehlermeldung</h4>
+      {% for field in form %}
+      {% for error in field.errors %}
+      <p>{{ error }}</p>
+      {% endfor %}
+      {% endfor %}
+    </div>
+    {% endif %}
+    <div class="md-col-6 lg-col-5 mx-auto p2 pt0 mt3 border1 bg-yt"
+      style=" box-shadow: 0 2px 20px rgba(0, 0, 0, 0.196); min-width: 270px;">
+      <form action="" method="POST" class="flex-column flex">
+        {% csrf_token %}
+        <h2 style="margin-bottom: 2.5rem;">Registrieren</h2>
+        <label class="f22 self-start" for="username_id">Benutzername:</label>
+        <input class="crispy-input border1 bg-three my2" type="text" name="username" autofocus="" required="" id="id_username" maxlength="20">
+  
+        <label class="f22 mt2 self-start" for="email_id">E-Mail:</label>
+        <input class="crispy-input border1 bg-three my2" type="email" name="email" id="id_email" required maxlength="254">
+  
+        <label class="f22 mt2 self-start" for="password1_id">Passwort:</label>
+        <input class="crispy-input border1 bg-three my2" type="password" name="password1" autocomplete="new-password" required=""
+          id="id_password1">
+  
+        <label class="f22 mt2 self-start" for="password2_id">Passwort bestätigen:</label>
+        <input class="crispy-input border1 bg-three my2" type="password" name="password2" autocomplete="new-password" required=""
+          id="id_password2">
+  
+        <button class="login-btn  self-center hover-up" type="submit" style="margin-top: 1.5em; width: auto;">Registrieren!</button>
+      </form>
+    </div>
+    <div class="mt3 f15 clr-yt">
+      Du hast bereits ein Konto?
+      <br>
+      <a href="{% url 'login' %}" class="clr-yt">Einloggen</a>
+    </div>
+  
+  </div>
+
+</body>
+</html>

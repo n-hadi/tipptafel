@@ -1,0 +1,3 @@
+{% for match in matches %}
+<input type="checkbox" name="games" value="{{match.identifier}}">{{match}}, {{match.start|date:"d.m"}}<br>
+{% endfor %}

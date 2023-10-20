@@ -1,0 +1,26 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+ <meta charset="UTF-8">
+ <meta http-equiv="X-UA-Compatible" content="IE=edge">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>Tipptafel | {{ user.username }}</title>
+ <link rel="stylesheet" href="{% static 'css/bass.css' %}">
+ <link rel="stylesheet" href="{% static 'css/style.css' %}">
+ <link rel="shortcut icon" href="{% static 'brand/favicon/favicon.ico' %}" type="image/x-icon">
+</head>
+
+<body class="m0">
+ {% block nav %}{% include 'core/blocks/nav.html' %}{% endblock nav %}
+
+<div class="col-12 m0 p0">
+  <img id="spinner" style="transform: translateY(10px);" class="htmx-indicator" src="{% static 'icons/spinner.gif' %}" />
+</div>
+ <div id="profile-content" class="col-11 mb4 p0 mx-auto">
+  {% block content %}{% include block_path %}{% endblock content %}
+ </div>
+ 
+  <script src="{% static 'js/htmx.js' %}"></script>
+</body>

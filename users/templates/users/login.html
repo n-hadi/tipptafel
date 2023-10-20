@@ -1,0 +1,53 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" style="max-width: none;">
+<head>
+ <meta charset="UTF-8">
+ <meta http-equiv="X-UA-Compatible" content="IE=edge">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>Tipptafel | Login</title>
+ <link rel="stylesheet" href="{% static 'css/bass.css' %}">
+ <link rel="stylesheet" href="{% static 'css/style.css' %}">
+ <link rel="shortcut icon" href="{% static 'brand/favicon/favicon.ico' %}" type="image/x-icon">
+
+</head>
+<body class="login-body">
+ 
+   <div class="center mb3" style="width: 1600px;">
+       <img src="{% static 'brand/logo_sm.png' %}" alt="">
+      {% if messages %}
+      <div class="md-col-6 lg-col-5 mx-auto p2 pt0 mt3 border1 bg-yt"
+        style=" box-shadow: 0 2px 20px rgba(0, 0, 0, 0.355); min-width: 270px;">
+        <h4 class="container-header">Fehlermeldung</h4>
+        {% for message in messages %}
+        <p>{{ message }}</p>
+        {% endfor %}
+      </div>
+      {% endif %}
+      
+      <div class="md-col-6 lg-col-5 mx-auto p2 pt0 mt3 border1 bg-yt "
+        style=" min-width: 270px; box-shadow: 0 2px 20px rgba(0, 0, 0, 0.196)">
+        <form action="" method="POST" class="flex-column flex">
+          {% csrf_token %}
+          <h2 style="margin-bottom: 2.5rem;">Einloggen</h2>
+          <label class="f22 self-start" for="email_id">E-Mail:</label>
+          <input class="crispy-input border1" style="background-color: var(--three);" type="text" name="email" id="email_id">
+          <label class="f22 w100 mt2 self-start" for="password_id">
+            <span class="left">Passwort:</span>
+          </label>
+          <input class="crispy-input border1" style="background-color: var(--three);" type="password" name="password" id="password_id">
+          <span class="w100"><a class="f14 mt1 right" style="color: rgb(164, 164, 164);" href="">Passwort vergessen?</a></span>
+          <input type="text" name="next" hidden value="{{next}}">
+          <button class="login-btn hover-up self-center" type="submit" style="margin-top: 2em; width: auto;">Einloggen!</button>
+        </form>
+      </div>
+
+      <div class="mt3">
+        <a href="{% url 'register' %}" class="f15 clr-yt">Kein Konto?</a>
+      </div>
+      
+    </div>
+  
+</body>
+</html>
+

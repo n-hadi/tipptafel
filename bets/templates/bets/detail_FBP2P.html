@@ -1,0 +1,152 @@
+{% extends request.htmx|yesno:'core/empty.html,core/frame.html' %}
+{% load static %}
+{% load formatted_date %}
+{% block content %}
+<div class="clearfix mx-auto border1 bg-yt m0  pb2" style="max-width: 380px;">
+ <h4 class="container-header" style="margin-bottom: 2.8rem;">
+  Tippspiel
+ </h4>
+  <div class="mx-auto " style="max-width: 350px;">
+   <div class="center mb2">
+    <div class="clearfix mb3">
+      <div class="col" style="width: 46%;">
+        {{bet.match.t1.full_name}}
+      </div>
+      <div class="col" style="width: 8%;">
+        vs
+      </div>
+      <div class="col" style="width: 46%;">
+        {{bet.match.t2.full_name}}
+      </div>
+    </div>
+    <div class="clearfix mb2 p0">
+     <div class="col p0" style="width: 46%; height: 100%;">
+      <img src="{{bet.match.t1.logo.url}}" alt="" height="50px" style="max-height: 50px;">
+     </div>
+     <div class="col p0" style="width: 8%; padding-top: 0.6rem;">
+      <img class="versus"src="{% static 'icons/versus.png' %}" alt="">
+     </div>
+     <div class="col p0" style="width: 46%;">
+      <img src="{{bet.match.t2.logo.url}}" alt="" height="50px" style="max-height: 50px;"> <br>
+     </div>
+    </div>
+    <span class="f14">{{bet.match.start|formatted_date }}</span>
+   </div>
+   <div class="m0 p0 w100" style="line-height: 2.1rem;">
+    <div class="px1">
+     <img src="{{bet.match.tournament.img.url}}" title="{{bet.match.tournament.name}}" width="30px" alt="">
+     <span class="right">
+      {% if bet.match.outcome == "an" %}
+      <img src="{% static 'icons/stopwatch-fill.svg' %}" class="mt1" width="19px" title="Wette/Spiel steht an" alt="">
+      {% elif bet.match.outcome == "un" %}
+      <img src="{% static 'icons/x-circle.svg' %}" class="mt1" width="17px" title="Wette/Spiel ungültig" alt="">
+      {% else %}
+      <img src="{% static 'icons/ref.svg' %}" class="mt1" width="22px" title="Wette/Spiel beendet" alt="">
+      {% endif %}
+     </span>
+    </div>
+    <hr class="border1">
+    <div class="px1">
+     <span class="left">Buchmacher: </span>
+     <span class="right">{{bet.challenger}}</span><br>
+     <span class="left">Einsatz:</span>
+     <span class="right" style="font-family: 'Panton-Black-Caps';">
+      {{bet.stake.normalize}}
+      <img src="{% static 'icons/tipptaler/tipptaler16x16.png' %}" style="margin-left: 0.1rem;" alt="" title="Taler" class="align-middle">
+    </span><br>
+     <span class="left">Tipp:</span>
+     <span class="right">
+      {% for tip in bet.challenger_bet %}
+      <img src="{% static 'icons/tipp/' %}{{tip}}.svg" alt="" srcset="">
+      {% endfor %}
+     </span> <br>
+     <div class="w100 pb1">
+      {% with bet_text|first as challenger_bet %}
+      {% if challenger_bet|length == 2 %}
+      <span class="right">{{challenger_bet|first }}</span>
+      <br><small class="right">oder</small><br>
+      <span class="right">{{challenger_bet|last }}</span>
+      {% else %}
+      <span class="right">{{challenger_bet|first}}</span>
+      {% endif %}
+      {% endwith %}
+     </div> <br>
+    </div>
+    <hr class="border1">
+    <div class="px1">
+     <span class="left">User:</span>
+     <span class="right">
+      {% if bet.contender != None %}
+      {{bet.contender}}
+      {% else %}
+       {% if request.user == bet.challenger or request.user == bet.contender %}
+        - 
+        {% else %}
+        Wird gesucht...
+       {% endif %}
+      {% endif %}
+     </span><br>
+     <span class="left">Tipp:</span>
+     <span class="right">
+      {% for tip in bet.contender_bet %}
+      <img src="{% static 'icons/tipp/' %}{{tip}}.svg" alt="" srcset="">
+      {% endfor %}
+     </span> <br>
+     <div class="right w100 pb2">
+      {% with bet_text|last as contender_bet %}
+      {% if contender_bet|length == 2 %}
+      <span class="right">{{contender_bet|first }}</span>
+      <br><small class="right">oder</small><br>
+      <span class="right">{{contender_bet|last }}</span>
+      {% else %}
+      <span class="right">{{contender_bet|first}}</span>
+      {% endif %}
+      {% endwith %}
+     </div>
+    </div>
+    
+    {% if request.user == bet.challenger or request.user == bet.contender %}
+    <hr class="w100 border1">
+       <div class="px1 w100"></div>
+          {% if bet_status == "User wird gesucht..." %}
+              <span class="f15">Status:</span> <br>
+              <div class="w100 flex flex-column items-center mt3 mb2">
+                <span style="font-family: 'Panton-Black-Caps'; font-size: smaller;">{{ bet_status }}</span>
+                <div>
+                  <span class="ball ball1 mt1"></span>
+                  <span class="ball ball2 mt1"></span>
+                  <span class="ball ball3 mt1"></span>
+                </div>
+              </div>
+          {% else %}
+            <div class="w100 mt2 mb3 py2">
+              <span class="left">Status:</span>
+              <span class="right">
+                {{bet_status}}
+              </span>
+            </div>
+          {% endif %}
+        </div>
+    {% else %}
+    <div class="px1">
+     <button class="place-btn mt2 w100" 
+     hx-post="{% url 'detail_take_FBP2P' bet.identifier %}"
+     hx-target="#page-content"
+     hx-push-url="true" 
+     hx-trigger="click once"
+     >
+      <img src="{% static 'brand/logo_mobile_transparent_yt.png' %}" width="30px" alt="" class="align-middle"
+       style="transform: rotate(220deg);">
+      <span class="align-middle">Wette Annehmen!</span>
+     </button>
+    </div>
+    {% endif %}
+   </div>
+   
+
+    
+
+   
+  </div>
+</div>
+{% endblock content%}

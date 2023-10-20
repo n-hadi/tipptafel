@@ -1,0 +1,246 @@
+{% extends request.htmx|yesno:'core/empty.html,core/frame.html' %}
+{% load static %}
+{% load formatted_date %}
+{% block content %}
+
+
+{% if not request.user.is_authenticated %}
+<div class="mb2 bg-yt border1 register-banner">
+  <h2 class="mb1" style="font-family: 'Panton-Black-Caps';">
+    <span class="clr-zero">Peer 2 Peer </span><span class="clr-four">Sportwetten</span>
+  </h2>
+  <span class="bold">Dein Einsatz, deine Quoten!</span>
+  <div class="w-100  mt3">
+    <a href="{% url 'register' %}" class="big-register-btn"><img class="align-middle"
+        src="{% static 'brand/icons/logo_yt_flipped.png' %}" alt=""> Registrieren!</a>
+  </div>
+</div>
+
+<!--
+<div id="topspiele" class="bg-yt border1 mt0 mb2 pb2">
+  <h4 class="container-header">
+    <img src="{% static 'icons/fireball.png' %}" class="align-middle" alt=""> Topspiele
+  </h4>
+  <div class="flex justify-around px2">
+    <div class="center">
+      <img width="48px" src="{% static 'pics/teams/bundesliga/bayern.png' %}" alt="">
+      <img class="versus" src="{% static 'icons/versus.png' %}" alt="">
+      <img width="48px" src="{% static 'pics/teams/bundesliga/schalke.png' %}" alt="">
+      <br>
+      <span class="f14">Sa, 15:00 Uhr</span>
+    </div>
+    <div class="center">
+      <img width="48px" src="{% static 'pics/teams/bundesliga/mainz.png' %}" alt="">
+      <img class="versus" src="{% static 'icons/versus.png' %}" alt="">
+      <img width="48px" src="{% static 'pics/teams/bundesliga/leipzig.png' %}" alt="">
+      <br>
+      <span class="f14">Sa, 15:00 Uhr</span>
+    </div>
+    <div class="xs-hide center">
+      <img width="48px" src="{% static 'pics/teams/bundesliga/dortmund.png' %}" alt="">
+      <img class="versus" src="{% static 'icons/versus.png' %}" alt="">
+      <img width="48px" src="{% static 'pics/teams/bundesliga/stuttgart.png' %}" alt="">
+      <br>
+      <span class="f14">Sa, 15:00 Uhr</span>
+    </div>
+  </div>
+</div>
+-->
+
+
+<div class="clearfix mb2">
+
+  <div class="sm-col sm-col-12 md-col-12 lg-col-6 h220 min420 rounded border1"
+  style="background-repeat: no-repeat; background-size: auto 220px; 
+  background-image: url('{% static 'pics/design/tt_kaufen_banner/so_funktionierts/so funktionierts.png' %}');"
+  >
+  <a class="p0 m0 w100 h100 cursor-pointer"
+  hx-get="{% url 'contact' %}" hx-target="#page-content" hx-push-url="true" 
+  >
+
+    <div class="clearfix p0 m0 xs-hide">
+      <div class="col col-12" style="height: 38px;"></div>
+      <div class="col col-12 right-align w100 pr2" style="height: 61px;">
+        <img class="vertically-center" src="{%  static 'pics/design/tt_kaufen_banner/click.png' %}" width="97px">
+      </div>
+      <div class="col col-12 right-align w100 pr2" style="height: 61px;">
+        <img class="vertically-center" src="{%  static 'pics/design/tt_kaufen_banner/so_funktionierts/triple_taler.png' %}"
+          width="60px">
+      </div>
+      <div class="col col-12 right-align w100 pr2" style="height: 61px;">
+        <img class="vertically-center" width="32px"
+          src="{%  static 'pics/design/tt_kaufen_banner/so_funktionierts/voltage.png' %}">
+      </div>
+    </div>
+  </a>
+    
+  </div>
+
+
+  <div class="sm-col sm-col-12 md-col-12 lg-col-6" id="we_accept_btc">
+    <a class="w100 h100 p0 m0 cursor-pointer"
+    hx-get="{% url 'contact' %}" hx-target="#page-content" hx-push-url="true" >
+    <div class="border1 bg-yt overflow-hidden h220">
+      <div class="col col-12 pl-sm-3 pl4 pt4 f22" style="font-family: 'Panton-Black-Caps';">
+        <span class="clr-zero">Wir akzeptieren</span> <br>
+        <img
+          src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Bitcoin_logo.svg/2560px-Bitcoin_logo.svg.png"
+          class="mt1" width="160px" alt="">
+      </div>
+    </div>
+    </a>
+  </div>
+
+
+</div>
+{% endif %}
+
+
+<div class="w100 flex">
+  <div class="bg-yt border1 w100">
+    <h4 class="container-header">
+      <img src="{% static 'brand/icons/logo2.png' %}" width="30px" class="align-middle" alt=""> Tipptafel
+      <button class="filter-btn right bg-zero lg-hide md-hide">Filter</button>
+    </h4>
+    <div class="col col-12 px2 mb3 sm-hide xs-hide">
+      <button class="filter-btn bg-four">Liga</button>
+      <button class="filter-btn bg-four">Spiel</button>
+      <button class="filter-btn bg-four">Anstoß</button>
+  
+      <button class="filter-btn right bg-zero">Neuste</button>
+      <button class="filter-btn right bg-zero">Einsatz</button>
+    </div>
+  
+  
+  {% if request.user.is_authenticated %}
+  
+    {% if open_bets %}
+    <table class="px2 tipptafel">
+      <thead class="left-align f16">
+        <th class="t-datum">Anstoß</th>
+        <th class="xs-hide t-user">User</th>
+        <th class="t-teams">Teams</th>
+        <th class="t-tipp">Tipp </th>
+        <th class="center t-einsatz">Einsatz</th>
+        <th class="center xs-hide">Tippen!</th>
+      </thead>
+      <tbody class="f15">
+  
+        {% for bet in open_bets %}
+        <tr>
+          <td class="t-datum">{{bet.match.start|formatted_date }}</td>
+          <td class="xs-hide truncate t-user">{{ bet.challenger }}</td>
+          <td class="t-teams ">
+            <img src="{{ bet.match.t1.logo_sm.url }}" height="16px" alt="">
+            <span class="xs-hide">{{ bet.match.t1.short_name }}</span>
+            <br class="xs-hide">
+            <img src="{{ bet.match.t2.logo_sm.url }}" height="16px" alt="">
+            <span class="xs-hide">{{ bet.match.t2.short_name }}</span>
+          </td>
+          <td class="t-tipp">
+            {% for tip in bet.challenger_bet %}
+            <img src="{% static 'icons/tipp/' %}{{tip}}.svg" alt="" srcset="">
+            {% endfor %}
+          </td>
+          <td class="bold center t-einsatz f16">{{ bet.stake.normalize }}</td>
+          <td class="center xs-hide">
+            <button class="tip-btn" data-gameid="{{ bet.identifier }}" data-date="{{bet.match.start|formatted_date }}"
+              data-user="{{ bet.challenger }}" data-t1="{{ bet.match.t1.short_name }}"
+              data-t1_img="{{ bet.match.t1.logo_sm.url }}" data-t2="{{ bet.match.t2.short_name }}"
+              data-t2_img="{{ bet.match.t2.logo_sm.url }}"
+              data-tipp="{% for tip in bet.challenger_bet %}{{tip}}{% if not forloop.last %}, {% endif %}{% endfor %}"
+              data-stake="{{ bet.stake.normalize }}" data-draw_impossible="{{ bet.match.draw_impossible }}"></button>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <section class="p0 m0">
+      <hr style="border-color: rgba(0, 0, 0, 0.1);">
+      <span class="w100 block center mb1 pt3" style="line-height: 1.8rem;">
+        <img src="{% static 'brand/logo_mobile.png' %}" class="align-middle mr1" width="40px" alt="" srcset=""
+          style="transform: rotate(-133deg);"> <br>
+        <span class="f22">Noch nichts hier... </span>
+      </span>
+      <span class="w100 flex justify-center flex-wrap mb4">
+  
+        <a class="nothing-here-btn bold m1" hx-get="{% url 'create_bet'  %}" hx-target="#page-content" hx-push-url="true">
+          <span class="clr-yt "> Wette erstellen!</span>
+        </a>
+      </span>
+    </section>
+    {% endif %}
+  
+  {% else %} <!--Mockup Bets-->
+    <table class="px2 tipptafel">
+      <thead class="left-align f16">
+        <th class="t-datum">Anstoß</th>
+        <th class="xs-hide t-user">User</th>
+        <th class="t-teams">Teams</th>
+        <th class="t-tipp">Tipp </th>
+        <th class="center t-einsatz">Einsatz</th>
+        <th class="center xs-hide">Tippen!</th>
+      </thead>
+      <tbody class="f15">
+  
+        {% for match, username, stake, tips in mockup_bets %}
+        <tr>
+          <td class="t-datum">{{ match.start|formatted_date }}</td>
+          <td class="xs-hide truncate t-user">{{ username }}</td>
+          <td class="t-teams ">
+            <img src="{{ match.t1.logo_sm.url }}" height="16px" alt="">
+            <span class="xs-hide">{{ match.t1.short_name }}</span>
+            <br class="xs-hide">
+            <img src="{{ match.t2.logo_sm.url }}" height="16px" alt="">
+            <span class="xs-hide">{{ match.t2.short_name }}</span>
+          </td>
+          <td class="t-tipp">
+            {% for tip in tips %}
+            <img src="{% static 'icons/tipp/' %}{{tip}}.svg" alt="" srcset="">
+            {% endfor %}
+          </td>
+          <td class="bold center t-einsatz f16">{{ stake }}</td>
+          <td class="center xs-hide">
+            <button class="tip-btn"></button>
+          </td>
+        </tr>
+        {% endfor %}
+  
+      </tbody>
+    </table>
+  {% endif %}
+  </div>
+
+
+  <div class="pl1 right-sidebar" style="max-width: 250px;">
+
+    <div class="bg-yt border1 center">
+      <h4 class="mb2" style="font-family: 'Panton-Black-Caps';">
+        <span class="clr-zero">Tipptaler</span><span class="clr-four"> kaufen</span>
+      </h4>
+      <div class="w100 center">
+        <img src="{% static 'pics/design/tt_kaufen_banner/banner_swap.png' %}" alt="" srcset=""
+          style=" width: 50%; height: auto;">
+      </div>
+      <a 
+      {% if request.user.is_authenticated %}
+       hx-get="{% url 'deposit_funds' %}" hx-target="#page-content" hx-push-url="true"
+      {% else %}
+      href="{% url 'login' %}"
+      {% endif %}
+      >
+        <button class="aufladen-btn my3 md-hide sm-hide xs-hide">Guthaben aufladen!</button>
+      </a>
+    </div>
+
+    <div class="w100 bg-yt mt1 border1 rounded overflow-scroll" style="height: 20rem;">
+      <h4 style="font-family: 'Panton-Black-Caps';" class="clr-zero center">Bundesliga <span class="clr-four">Tabelle</span>
+      </h4>
+      <div id="fblwidget_table"></div>
+    </div>
+  </div>
+  
+</div>
+
+{% endblock content %}

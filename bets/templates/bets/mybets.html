@@ -1,0 +1,128 @@
+{% extends request.htmx|yesno:'core/empty.html,core/frame.html' %}
+{% load static %}
+{% load i18n %}
+{% load formatted_date %}
+{% block content %}
+
+{% if messages %}
+<div class="border1 bg-yt mb2 pb3">
+   <h4 class="container-header">Bestätigung</h4>
+   {% for message in messages %}
+     <span class="px2">{{ message }}</span>
+   {% endfor %}
+</div>
+{% endif %}
+
+ <div class="border1 bg-yt m0 ">
+  <h4 class="container-header">Meine Wetten
+   {% if bets %}
+   <button class="hide-old-bets right allbetsvisible visible_eye"
+   onclick="toggle_oldbets(this)">
+   <span class="mr1">alte Wetten ausblenden</span>
+   </button>
+   {% endif %}
+  </h4>
+   {% if bets %}
+   <table class="px2 mybets">
+      <thead class="left-align f16">
+         <th class="t-datum">Anstoß</th>
+         <th class="xs-hide t-user">User</th>
+         <th class="t-teams">Teams</th>
+         <th class="t-tipp">Dein Tipp </th>
+         <th class="center t-einsatz">Einsatz</th>
+         <th class="center xs-hide">Status</th>
+         <th class="center"></th>
+      </thead>
+      <tbody class="f15">
+   
+         {% for bet in bets %}
+         <tr>
+            <td class="t-datum">
+               {{bet.match.start|formatted_date }}
+            </td>
+            <td class="xs-hide truncate t-user">
+               {% if bet.challenger == request.user and bet.contender %}
+               {{ bet.contender }}
+               {% elif bet.contender == request.user %}
+               {{ bet.challenger }}
+               {% endif %}
+            </td>
+            <td class="t-teams ">
+               <img src="{{ bet.match.t1.logo_sm.url }}" height="16px" alt="">
+               <span class="xs-hide">{{ bet.match.t1.short_name }}</span>
+               <br class="xs-hide">
+               <img src="{{ bet.match.t2.logo_sm.url }}" height="16px" alt="">
+               <span class="xs-hide">{{ bet.match.t2.short_name }}</span>
+            </td>
+            <td class="t-tipp">
+               {% if bet.challenger == request.user %}
+               {% for tip in bet.challenger_bet %}
+               <img src="{% static 'icons/tipp/' %}{{tip}}.svg" alt="" srcset="">
+               {% endfor %}
+               {% elif bet.contender == request.user %}
+               {% for tip in bet.contender_bet %}
+               <img src="{% static 'icons/tipp/' %}{{tip}}.svg" alt="" srcset="">
+               {% endfor %}
+               {% endif %}
+            </td>
+            <td class="bold center t-einsatz f16">{{ bet.stake.normalize }}</td>
+            <td class="center xs-hide">
+               <div class="p0 h100 bet_status" data-gameid="{{ bet.identifier }}">
+               </div>
+            </td>
+            <td class="center t-teilen">
+               <a class="t-detail" 
+               data-gameid="{{ bet.identifier }}" 
+               data-date="{{ bet.match.start| date:'Y/m/d' }}" 
+               data-user="{% if bet.challenger == request.user %}{{ bet.contender.username }}{% elif bet.contender == request.user %}{{ bet.challenger.username }}{% endif %}" 
+               data-t1="{{ bet.match.t1.short_name }}" 
+               data-t1_img="{{ bet.match.t1.logo_sm.url }}"
+               data-t2="{{ bet.match.t2.short_name }}" 
+               data-t2_img="{{ bet.match.t2.logo_sm.url }}" 
+               data-tipp="{% if bet.challenger == request.user %}{% for tip in bet.challenger_bet %}{{tip}}{% if not forloop.last %}, {% endif %}{% endfor %}{% elif bet.contender == request.user %}{% for tip in bet.contender_bet %}{{tip}}{% if not forloop.last %}, {% endif %}{% endfor %}{% endif %}" 
+               data-stake="{{ bet.stake.normalize }}"
+               data-match_outcome="{{bet.match.outcome}}"
+               data-draw_impossible="{{bet.match.draw_impossible}}"
+               ></a>
+            </td>
+         </tr>
+         {% endfor %}
+   
+      </tbody>
+   </table>
+   {% else %}
+   <span class="w100 block center bold p2 mb1">
+      <img src="{% static 'brand/logo_mobile.png' %}" class="align-middle mr1" width="40px" alt="" srcset=""
+         style="transform: rotate(-133deg);">
+      <span class="f22">Noch nichts hier... </span>
+   </span>
+   <span class="w100 flex justify-center flex-wrap mb4">
+
+      <a class="nothing-here-btn bold m2" 
+       hx-get="{% url 'create_bet'  %}"
+       hx-target="#page-content" 
+       hx-push-url="true">
+         <span class="clr-yt "> Wette erstellen!</span>
+      </a>
+      <a class="nothing-here-btn bold m2" style="background-color:var(--zero);" 
+         hx-get="{% url 'index' %}"
+         hx-target="#page-content"
+         hx-push-url="true">
+         <span class="" style="color: white;"> Wette suchen!</span>
+      </a>
+   </span>
+   
+   {% endif %}
+ </div>
+ {% if request.htmx %}
+   <span id="sidebar-guthaben" hx-swap-oob="true">
+      <a hx-get="{% url 'deposit_funds' %}" class="unstyled p0 m0 cursor-pointer" hx-target="#page-content">
+         <span>
+            {{ user.balance.amount.normalize }}
+            <img class="align-middle absolute" src="{% static 'icons/tipptaler/tipptaler19x19.png' %}" alt="€"
+               style="margin-left: 0.2rem;" title="Tipptaler">
+         </span>
+      </a>
+   </span>
+ {% endif %}
+{% endblock content%}
