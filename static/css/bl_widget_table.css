@@ -1,0 +1,202 @@
+.blwTeamicon {
+ max-width: 20px !important;
+ max-height: 20px !important;
+ padding-right: 5px;
+ vertical-align: middle
+}
+
+.blwTable {
+ display: table;
+ width: 50%;
+ margin: 0 auto
+}
+
+.blwTableRow {
+ display: table-row;
+ padding-top: 3px;
+ padding-bottom: 3px
+}
+
+.blwTableTableRow {
+ height: 33px
+}
+
+.blwTableTableRow_compact {
+ line-height: 18px
+}
+
+.blwTableCell,
+.blwTableHead {
+ display: table-cell;
+ padding: 3px 10px;
+ vertical-align: middle
+}
+
+.blwTeam>a {
+ color: #6495ed
+}
+
+.blwTableRow>a {
+ color: #6495ed
+}
+
+.blwTableCellCondensed {
+ display: table-cell;
+ padding: 0
+}
+
+.blwTableCell-center {
+ text-align: center
+}
+
+.blwTableCell-left {
+ text-align: left
+}
+
+.blwTableCell-right {
+ text-align: right
+}
+
+.blwPoints {
+ font-weight: bold;
+ font-size: 1.3em
+}
+
+.blwTableHeading {
+ background-color: #eee;
+ display: table-header-group;
+ font-weight: bold;
+ font-size: 1.3em;
+ padding-top: 4px;
+ padding-bottom: 4px
+}
+
+.blwTableHeading_compact {
+ background-color: #eee;
+ display: table-header-group;
+ font-weight: normal;
+ font-size: 1.3em;
+ padding-top: 4px;
+ padding-bottom: 4px
+}
+
+.blwTableFoot {
+ background-color: #eee;
+ display: table-footer-group;
+ font-weight: bold
+}
+
+.blwTableGroup {
+ display: table-row-group
+}
+
+.blwTableCaption {
+ display: table-caption;
+ text-align: center
+}
+
+.blwTableBody {
+ display: table-row-group
+}
+
+.blwResult {
+ white-space: nowrap;
+ font-weight: bold;
+ font-size: 20px
+}
+
+.blwTeam {
+ white-space: nowrap;
+ font-size: 16px
+}
+
+.blwTeamName {
+ white-space: nowrap;
+ font-size: 16px
+}
+
+.blwTime {
+ font-size: small;
+ padding-top: 12px;
+ padding-bottom: 0;
+ color: #808080;
+ white-space: nowrap
+}
+
+.blwTimeTeammatch {
+ font-size: small;
+ color: #808080;
+ white-space: nowrap
+}
+
+.blwleague {
+ font-size: small;
+ white-space: nowrap;
+ padding-top: 12px;
+ padding-left: 55px;
+ font-weight: bold;
+ color: #333
+}
+
+.blwWidget {
+ font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+}
+
+.blwWidgetSimple {
+ font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+}
+
+.blwHighlighted {
+ font-weight: bold
+}
+
+.ads {
+ margin-bottom: 8px
+}
+
+.backlink {
+ font-size: 9px;
+ padding-top: 2px;
+ padding-bottom: 0;
+ color: #c4c1c1;
+ white-space: nowrap;
+ line-height: normal !important
+}
+
+.backlink>a {
+ font-size: 9px !important;
+ line-height: normal !important;
+ color: #808080 !important;
+ white-space: nowrap;
+ text-decoration: underline !important
+}
+
+
+/*Bundesliga-widgets*/
+.blwTable {
+ width: 100% !important;
+ font-size: smaller !important;
+}
+
+.blwWidget {
+ font-family: 'Josefin' !important;
+}
+
+.blwTableHeading_compact {
+ font-size: 1.1rem !important;
+ background-color: var(--three) !important;
+}
+
+.blwTableCell[title="Punkte"] {
+ text-align: center !important;
+}
+
+.blwTableCell {
+ font-size: 15px !important;
+}
+
+strong {
+ font-weight: normal !important;
+}
+
+/*BlW END*/

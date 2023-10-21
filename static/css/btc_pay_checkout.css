@@ -1,0 +1,40 @@
+.timer-row {
+ background: #FBF9FA !important;
+ color: black !important
+}
+
+.payment-tabs__tab.active {
+ border-bottom: #A80038 3px solid !important
+}
+
+.action-button {
+ background: #A80038 !important
+}
+.action-button:hover{
+   background: #FEB139 !important
+}
+
+.powered__by__btcpayserver a {
+  color: #A80038 !important
+}
+.powered__by__btcpayserver a:hover{
+ color: #FEB139 !important
+}
+
+.prettydropdown:not(.disabled)>ul.active {
+ border-color: #A80038 !important
+}
+
+.separatorGem {
+ background: #FEB139 !important
+}
+
+.timer-row.expiring-soon {
+ background: #A80038 !important;
+ color: white !important;
+}
+
+.expired .timer-row {
+ background: #A80038 !important;
+ color: white !important;
+}
