@@ -22,12 +22,12 @@ def mockup_bets():
  random.shuffle(mockup_usernames)
 
 
- mockup_stakes = [random.randint(5, 100) for _ in range(50)]
+ mockup_stakes = [random.randint(5, 100) for _ in range(30)]
 
  options = [['t1'],['t2'],['x'],['t1','t2'],['t1','x'],['t2','x']]
- mockup_tips = [ options[random.randint(0,5)] for _ in range(50) ]
+ mockup_tips = [ options[random.randint(0,5)] for _ in range(30) ]
  start_range = [ timezone.now(), timezone.now()+timedelta(days=60 )]
- mockup_bets = zip(Match.objects.filter(start__range=start_range).order_by('start')[:50], 
+ mockup_bets = zip(Match.objects.filter(start__range=start_range).order_by('start')[:30], 
                     mockup_usernames, 
                     mockup_stakes,
                     mockup_tips)
