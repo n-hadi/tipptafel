@@ -40,8 +40,11 @@ def manage_login(request):
          if user is not None:
              login(request, user)
              redirect_to = request.POST.get('next')
-             if redirect_to != 'None':
+             if redirect_to != 'None' and redirect_to != None and redirect_to != '':
+                try:
                  return redirect(redirect_to)
+                except:
+                    pass
              return redirect('index')
          else:
              messages.info(request, 'E-Mail, Benutzername oder Password falsch.')
