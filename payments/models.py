@@ -70,7 +70,7 @@ def create_payment_identifier(sender, instance, created, **kwargs):
  if instance.identifier == '':
     while True:
       characters = string.ascii_letters + string.digits
-      identifier = ''.join(random.choice(characters) for _ in range(11))
+      identifier = ''.join(random.choice(characters) for _ in range(12))
       if not Withdrawal.objects.filter(identifier=identifier).exists():
        instance.identifier = identifier
        instance.save()
