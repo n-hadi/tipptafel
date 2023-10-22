@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-^87#(d88v!f=pxp$s0d0_yq&r-1&#j=6$%a1zz$@)s38egjr(k
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '164.92.160.21','tipptafel.de']
+ALLOWED_HOSTS = ['localhost', '164.92.160.21','tipptafel.de','www.tipptafel.de']
 CSRF_TRUSTED_ORIGINS = [
     'https://btcpay.tipptafel.de'
 ]
