@@ -11,7 +11,7 @@ class BTCPay_Client(models.Model):
   pickle_data = models.BinaryField(default=b'', editable=True)
 
 class Payment(models.Model):
-  identifier = models.CharField(default='', max_length=11, editable=False)#wegen false not im admin display
+  identifier = models.CharField(default='', max_length=99, editable=False)#wegen false not im admin display
   user  = models.ForeignKey('users.User', on_delete=models.PROTECT)
   date = models.DateTimeField(auto_now_add=True) 
   tt_amount = models.DecimalField(default=0,max_digits=8, decimal_places=2) #amount purchased tt
@@ -36,7 +36,7 @@ def create_payment_identifier(sender, instance, created, **kwargs):
  if instance.identifier == '':
     while True:
       characters = string.ascii_letters + string.digits
-      identifier = ''.join(random.choice(characters) for _ in range(11))
+      identifier = ''.join(random.choice(characters) for _ in range(12))
       if not Payment.objects.filter(identifier=identifier).exists():
        instance.identifier = identifier
        instance.save()
@@ -70,7 +70,7 @@ def create_payment_identifier(sender, instance, created, **kwargs):
  if instance.identifier == '':
     while True:
       characters = string.ascii_letters + string.digits
-      identifier = ''.join(random.choice(characters) for _ in range(12))
+      identifier = ''.join(random.choice(characters) for _ in range(11))
       if not Withdrawal.objects.filter(identifier=identifier).exists():
        instance.identifier = identifier
        instance.save()

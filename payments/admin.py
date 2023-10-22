@@ -13,7 +13,7 @@ class BalanceInline(nested_admin.NestedTabularInline):
 
 class PaymentAdmin(nested_admin.NestedModelAdmin):
  inlines = [BalanceInline,]
- readonly_fields = ["date"]
+ readonly_fields = ["date","identifier"]
 
 class BTCPay_ClientAdmin(admin.ModelAdmin):
   add_form_template = 'payments/admin/add_btcpay_client.html'
