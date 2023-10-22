@@ -48,25 +48,48 @@
 <div class="slideout" id="slideout-infos">
  <h4 class="container-header">Informationen</h4>
  <ul class="slideout-list" style="line-height: 2rem;">
-  <li><a href="">Wer wir sind</a></li>
-  <li><a href="">Häufig gestellte Fragen</a></li>
-  <li><a href="">Hilfe</a></li>
-  <li><a href="">AGB</a></li>
-  <li><a href="">Datenschutz</a></li>
-  <li><a href="">Spielschutz</a></li>
-  <li><a href="">Impressum</a></li>
+  <li><a 
+      hx-get="{% url 'contact'  %}"
+      hx-indicator="#content_spinner"
+      hx-target="#page-content"
+      hx-push-url="true"
+       >Wer wir sind</a></li>
+  <li><a 
+      hx-get="{% url 'contact'  %}"
+      hx-indicator="#content_spinner"
+      hx-target="#page-content"
+      hx-push-url="true"
+      >Häufig gestellte Fragen</a></li>
+  <li><a 
+      hx-get="{% url 'contact'  %}"
+      hx-indicator="#content_spinner"
+      hx-target="#page-content"
+      hx-push-url="true"
+      >Hilfe</a></li>
+  <li><a 
+      hx-get="{% url 'agb'  %}"
+      hx-indicator="#content_spinner"
+      hx-target="#page-content"
+      hx-push-url="true"
+      >AGB</a></li>
+  <li><a 
+      hx-get="{% url 'contact'  %}"
+      hx-indicator="#content_spinner"
+      hx-target="#page-content"
+      hx-push-url="true"
+      >Impressum</a></li>
  </ul>
 </div>
 <div class="slideout" id="slideout-comm">
  <h4 class="container-header">Community</h4>
  <ul class="slideout-list" style="line-height: 3rem;">
-  <li><a href="" class="slideout-com-btn">
+  <li><a class="slideout-com-btn">
     <img src="{% static 'icons/ranglisten.png' %}" alt="" srcset=""> Ranglisten</a>
   </li>
-  <li><a href="" class="slideout-com-btn">
+  <li><a class="slideout-com-btn">
     <img src="{% static 'icons/gutscheine.png' %}" alt="" srcset=""> Gutscheine</a>
   </li>
-  <li><a href="" class="slideout-com-btn">
+  <li><a class="slideout-com-btn">
     <img src="{% static 'icons/aktionen.png' %}" alt="" srcset=""> Aktionen</a>
   </li>
  </ul>
