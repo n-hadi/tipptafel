@@ -11,7 +11,7 @@ class BTCPay_Client(models.Model):
   pickle_data = models.BinaryField(default=b'', editable=True)
 
 class Payment(models.Model):
-  identifier = models.CharField(default='', max_length=99, editable=False)#wegen false not im admin display
+  identifier = models.CharField(default='', max_length=12, editable=False)#wegen false not im admin display
   user  = models.ForeignKey('users.User', on_delete=models.PROTECT)
   date = models.DateTimeField(auto_now_add=True) 
   tt_amount = models.DecimalField(default=0,max_digits=8, decimal_places=2) #amount purchased tt
@@ -26,11 +26,7 @@ class Payment(models.Model):
   invoice_creation_data = models.JSONField(blank=True, null=True)
   invoice_creation_error = models.CharField(default="", max_length=99999, blank=True,null=True)
 
-class BTCPay_IPN(models.Model): #Instant Payment Notification
-   payment = models.ForeignKey('payments.Payment', on_delete=models.CASCADE)
-   webhook_response = models.JSONField(blank=True,null=True)
 
-  
 @receiver(post_save, sender=Payment)
 def create_payment_identifier(sender, instance, created, **kwargs):
  if instance.identifier == '':
@@ -41,6 +37,13 @@ def create_payment_identifier(sender, instance, created, **kwargs):
        instance.identifier = identifier
        instance.save()
        break
+
+
+
+class BTCPay_IPN(models.Model): #Instant Payment Notification
+   payment = models.ForeignKey('payments.Payment', on_delete=models.CASCADE)
+   webhook_response = models.JSONField(blank=True,null=True)
+
 
 class Withdrawal(models.Model):
   identifier = models.CharField(default='', max_length=11, editable=False)#wegen false not im admin display
@@ -66,7 +69,7 @@ class Withdrawal(models.Model):
 
 
 @receiver(post_save, sender=Withdrawal)
-def create_payment_identifier(sender, instance, created, **kwargs):
+def create_withdrawal_identifier(sender, instance, created, **kwargs):
  if instance.identifier == '':
     while True:
       characters = string.ascii_letters + string.digits

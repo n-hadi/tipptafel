@@ -113,20 +113,20 @@ function guthabenok(team_checkboxes){
    }else{return true}
 }
 // check if for every t checked sum given 
-// einsatz summe >=5
+// einsatz summe >=1
 function einsatz_ok(team_checkboxes){
    var einsatz_ok = true;
    team_checkboxes.forEach(e => {
       if (e.checked) {
          var einsatz_input = document.querySelector(".einsatz_input[data-gameid='" + e.name + "']")
-         if (einsatz_input.value < 5) {
+         if (einsatz_input.value < 1) {
             einsatz_input.style.border = '1px solid var(--zero)';
             einsatz_ok = false;
          }
       }
    })
    if (einsatz_ok == false){
-      alert('Der Einsatz pro Tippspiel muss mindestens 5 Tipptaler betragen.')
+      alert('Der Einsatz pro Tippspiel muss mindestens 1 Tipptaler betragen.')
    }
    return einsatz_ok
 }

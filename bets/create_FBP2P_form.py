@@ -56,7 +56,7 @@ def validate_bet(orderedbet):
 def stake_is_valid(stake): 
   try:
      stake = round(float(stake),2)
-     if type(stake) == float and stake >= 5 and stake <= 9999:
+     if type(stake) == float and stake >= 1 and stake <= 99999:
       return True
      else:
       return False

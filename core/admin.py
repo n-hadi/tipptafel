@@ -40,8 +40,8 @@ class MatchAdmin(DjangoObjectActions,AdminConfirmMixin,admin.ModelAdmin):
     actions = ["Wetten_auszahlen"] #admin-confirm module
 
     @confirm_action
-    @action(label="P2P Festwetten auszahlen",description="Auszahlen und NoUserFound zurückzahlen")  
-    def Wetten_auszahlen(modeladmin, request, obj): 
+    @action(label="Festwetten auszahlen",description="Auszahlen und NoUserFound zurückzahlen")  
+    def Wetten_auszahlen(self, request, obj): 
         payout_bets(request, obj)
     Wetten_auszahlen.allowed_permissions = ('change','add') #admin-confirm module
 

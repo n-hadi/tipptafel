@@ -998,7 +998,7 @@ td + .t-einsatz::after{
    align-items: center;
 }
 .sidebar-guthaben-hd {
-   font-family: 'Panton';
+   font-family: 'Panton-Black-Caps';
    font-size: 13px;
    color: var(--zero);
    margin-top: 3rem;
@@ -1317,7 +1317,7 @@ justify-content: center;
    border-radius: 35px 0 0 35px;
    padding: 8px;
    outline: none;
-   font-family: "Panton";
+   font-family: "Panton-Black-Caps";
    font-size: 43px;
    text-align: end;
 }

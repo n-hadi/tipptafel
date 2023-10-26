@@ -417,10 +417,14 @@ function toggle_oldbets(hidebutton) {
   var detailbtns = document.querySelectorAll('a.t-detail');
   for(let i =0; i < detailbtns.length; i++){
     var detail_btn = detailbtns[i]
-    var dataDate = new Date(detail_btn.getAttribute('data-date'));
+    const inputDateParts = detail_btn.getAttribute('data-date').split('/');
+    const year = parseInt(inputDateParts[0]);
+    const month = parseInt(inputDateParts[1]) - 1; // Months are 0-based (0 = January, 11 = December)
+    const day = parseInt(inputDateParts[2]) + 1;  // +1 to also display bets of today
+    const dataDate = new Date(year, month, day);
     var closestTR = detail_btn.closest('tr')
     var closestTR_display = window.getComputedStyle(closestTR).getPropertyValue("display")
-      if (dataDate > currentTime) {
+      if (dataDate >= currentTime) {
         closestTR.style.display = 'table-row';      
       } 
       else if(closestTR_display == "none" && !allbetsvisible){
