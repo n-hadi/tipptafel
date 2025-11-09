@@ -1,0 +1,454 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="{% static 'brand/favicon/favicon.ico' %}" type="image/x-icon">
+  <title>Tipptafel | P2P Sportwetten</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @font-face {
+      font-family: "Panton-Black-Caps";
+      src: url("{% static 'fonts/Panton/Panton-BlackCaps.otf' %}");
+      font-display: swap
+    }
+
+    @font-face {
+      font-family: "Rajdhani-Bold";
+      src: url("{% static 'fonts/Rajdhani/Rajdhani-Bold.ttf' %}");
+      font-display: swap
+    }
+
+    .sqr-pattern {
+      background-image: url("{% static 'icons/landing_redo/background/sqr-pattern-opacity-low.png' %}");
+      background-size: 90%;
+      background-repeat: repeat;
+    }
+
+    .panton {
+      font-family: 'Panton-Black-Caps';
+      font-size: clamp(1.9rem, 8vw, 3rem)
+    }
+
+    .big-register-btn {
+      width: max-content;
+      background-color: #A80038;
+      font-family: 'Panton-Black-Caps';
+      padding: 0.2em 0.7em 0.2em 0.7em;
+      border: 3px solid #FFFFFF;
+      border-radius: 10px;
+      box-sizing: border-box;
+      box-shadow: 3px 3px 0px rgb(196, 196, 196),
+        5px 5px 10px rgb(138, 138, 138, 0.5);
+      text-decoration: none;
+      vertical-align: middle;
+      font-size: 23px;
+      letter-spacing: 2px;
+      color: white;
+      text-align: center;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+
+    .big-register-btn>img {
+      display: none;
+      width: 1.5rem;
+      transform: rotate(230deg);
+    }
+
+    .big-register-btn:hover {
+      transform: translateY(-3px);
+    }
+
+    @media(max-width:40em) {
+      .big-register-btn {
+        font-size: 20px;
+      }
+
+      #logo_yt_flipped {
+        width: 28px !important;
+      }
+    }
+
+    @media (min-width: 1441px) {
+      .big-register-btn {
+        font-size: 30px;
+        border-radius: 12px;
+      }
+
+    }
+
+    /* Parent container */
+    .floodlight-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      width: 55%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+      padding: 0;
+    }
+
+    .floodlight {
+      width: 100%;
+      background: linear-gradient(to right, rgb(207, 207, 207), white);
+      opacity: 0.1;
+      margin: 5px 0;
+      transform: translateX(-15rem) rotate(45deg);
+    }
+
+    .bg-one {
+      background-color: #fff3f4be;
+    }
+
+    .bg-two {
+      background-color: #ffe3e99a;
+    }
+
+    .bg-three {
+      background-color: #fac6d27e;
+    }
+
+    .bg-four {
+      background-image: url("{% static 'icons/landing_redo/background/subtle-prism.png' %}");
+      background-repeat: repeat;
+
+    }
+
+    .prominent-shadow {
+      text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.3)
+    }
+
+    .shadow-border {
+      text-shadow:
+        -2px -2px 0 white,
+        2px -2px 0 white,
+        -2px 2px 0 white,
+        2px 2px 0 white,
+        4px 4px 10px rgba(0, 0, 0, 0.5);
+    }
+
+
+
+
+    .rotated-div {
+      display: flex;
+      position: absolute;
+      height: 150vh;
+      width: 100%;
+      transform: rotate(15deg) translateX(calc(16.5%));
+    }
+
+
+    @keyframes up {
+      0% {
+        transform: translateY(0) rotate(-15deg);
+      }
+
+      100% {
+        transform: translateY(calc(-30.5vh*5)) rotate(-15deg);
+      }
+    }
+
+    .up {
+      height: 8.5vh;
+      margin-bottom: 22vh;
+      animation: up 60s linear infinite;
+    }
+
+    @keyframes down {
+      100% {
+        transform: translateY(0) rotate(-15deg);
+      }
+
+      0% {
+        transform: translateY(calc(-30.5vh*5)) rotate(-15deg);
+      }
+    }
+
+    .down {
+      height: 8.5vh;
+      margin-bottom: 22vh;
+      animation: down 60s linear infinite;
+    }
+
+    .logos {
+      opacity: 80%;
+      height: max-content;
+      max-width: 8.5vh;
+      filter: drop-shadow(1px 1px 3px rgba(0, 0, 0, 0.459));
+    }
+
+    .footer-icons {
+      width: 3.5rem;
+      height: auto;
+
+    }
+
+    .header-icons {
+      width: 1.8rem;
+      height: auto;
+      filter: drop-shadow(1px 1px 3px rgba(0, 0, 0, 0.3));
+    }
+
+    @media (min-width: 768px) {
+      .footer-icons {
+        width: 4.2rem;
+      }
+    }
+
+    @media (min-width: 1441px) {
+      .footer-icons {
+        width: 6rem;
+      }
+
+      .header-icons {
+        width: 3rem;
+      }
+    }
+
+    .rajdhani {
+      font-family: "Rajdhani-Bold";
+      font-size: clamp(1.55rem, 2.5vw, 2.5rem);
+      display: inline-flex;
+      text-shadow:
+        -2px -2px 0 white,
+        2px -2px 0 white,
+        -2px 2px 0 white,
+        2px 2px 0 white,
+        4px 4px 10px rgba(0, 0, 0, 0.5);
+    }
+
+    .rajdhani>img {
+      margin-right: 1rem;
+      width: 1.5rem;
+      height: 1.5rem;
+    }
+
+    .rajdhani:hover {
+      transform: translateX(10px);
+      color: #A80038
+    }
+
+    @media (min-width: 1280px) and (max-width: 1440px) {
+      .rajdhani {
+        font-size: clamp(1.4rem, 2vw, 2.2rem);
+      }
+    }
+
+    .wrapper {
+      max-width: 1000px !important;
+    }
+
+    @media (max-width: 400px) {
+      .burger {
+        width: 35px !important;
+      }
+    }
+  </style>
+</head>
+
+<body class="sqr-pattern">
+  <div class="max-w-[1920px] w-full mx-auto">
+    <div class="w-full h-full relative invisible md:visible">
+      <div class="floodlight-container max-h-[1440px] ">
+        <div class="floodlight h-[35%]"></div>
+        <div class="floodlight h-[30%]"></div>
+      </div>
+    </div>
+    <div class="h-screen flex justify-between p-0 relative max-h-[1440px] ">
+
+      <!--left side -->
+      <div class="flex flex-col h-full absolute w-full md:w-auto">
+
+        <!-- Social Media Icons/ Nav -->
+        <div class="flex md:gap-5 items-center md:bg-inherit p-5 md:p-2 justify-between md:justify-normal">
+          <img src="{% static 'icons/landing_redo/social_media/ig.png' %}" class="hidden md:flex header-icons">
+          <img src="{% static 'icons/landing_redo/social_media/fb.png' %}" class="hidden md:flex header-icons">
+          <img src="{% static 'icons/landing_redo/social_media/x.png' %}" class="hidden md:flex header-icons">
+          <img src="{% static 'icons/landing_redo/social_media/reddit.png' %}" class="hidden md:flex header-icons">
+          <img src="{% static 'brand/logo_sm.png' %}" class="md:hidden z-50 drop-shadow-md"
+            style="width: clamp(220px, 65%, 260px);">
+          <button onclick="slideout(this)" class="z-50 transition-all duration-300 ease-in-out">
+            <img src="{% static 'icons/burger.png' %}" width="50px" class="md:hidden drop-shadow burger">
+          </button>
+        </div>
+
+        <div class="flex flex-col w-full md:hidden mt-8">
+          <div class="w-full bg-[#A80038] panton text-white text-center prominent-shadow px-2 py-8">
+            DIREKTE WETTEN.
+          </div>
+          <div class="w-full bg-grey-300 panton text-center prominent-shadow px-2 py-8">
+            OHNE BUCHMACHER.
+          </div>
+          <div class="w-full bg-black panton text-white text-center prominent-shadow px-2 py-8">
+            FAIR, TRANSPARENT
+          </div>
+        </div>
+
+        <!-- Centered Logo Div -->
+        <div class="flex flex-1 flex-col justify-center items-center w-full md:mt-0 mt-14">
+          <img src="{% static 'icons/landing_redo/logo.png' %}" width="" class="hidden md:flex z-50 pl-4"
+            style="width: clamp(300px, 30vw, 600px);" alt="">
+          <a href="{% url 'register' %}" class="big-register-btn md:mt-24">
+            <img class="inline-block align-middle" id="logo_yt_flipped"
+              src="{% static 'icons/landing_redo/logo_mobile_transparent_yt.svg' %}" alt="">
+            Registrieren!
+          </a>
+        </div>
+
+        <!-- Footer Section -->
+        <div class="mt-16 md:mt-auto p-2 w-full opacity-50">
+          <span class="text-xs text-[#828282]">powered by</span>
+          <div class="flex justify-between items-center space-x-4">
+            <!-- Add space between the icons if needed -->
+            <img src="{% static 'icons/landing_redo/btcpay.png' %}" class="footer-icons">
+            <img src="{% static 'pics/design/sofort.png' %}" class="footer-icons">
+            <img src="{% static 'pics/design/paysafe.png' %}" class="footer-icons">
+            <img src="{% static 'pics/design/klarna.png' %}" class="footer-icons">
+          </div>
+        </div>
+
+
+      </div>
+      <!--right side -->
+      <div class="h-screen hidden md:flex w-[60%] max-h-[1440px]  items-center absolute right-0 overflow-hidden">
+        <div class="rotated-div">
+
+          <div
+            class="basis-[33%] md:basis-[25%] lg:basis-[17%] bg-one flex flex-col justify-between items-center border-l shadow-lg bg-one">
+
+            <div class="w-full flex justify-center up"><img src="{% static 'icons/landing_redo/logos/clubs/1.png' %}"
+                class="logos" alt="" srcset=""></div>
+            <div class="w-full flex justify-center up"><img src="{% static 'icons/landing_redo/logos/clubs/2.png' %}"
+                class="logos" alt="" srcset=""></div>
+            <div class="w-full flex justify-center up"><img src="{% static 'icons/landing_redo/logos/clubs/3.png' %}"
+                class="logos" alt="" srcset=""></div>
+            <div class="w-full flex justify-center up"><img src="{% static 'icons/landing_redo/logos/clubs/4.png' %}"
+                class="logos" alt="" srcset=""></div>
+            <div class="w-full flex justify-center up"><img src="{% static 'icons/landing_redo/logos/clubs/5.png' %}"
+                class="logos" alt="" srcset=""></div>
+
+            <div class="w-full flex justify-center up"><img src="{% static 'icons/landing_redo/logos/clubs/1.png' %}"
+                class="logos" alt="" srcset=""></div>
+            <div class="w-full flex justify-center up"><img src="{% static 'icons/landing_redo/logos/clubs/2.png' %}"
+                class="logos" alt="" srcset=""></div>
+            <div class="w-full flex justify-center up"><img src="{% static 'icons/landing_redo/logos/clubs/3.png' %}"
+                class="logos" alt="" srcset=""></div>
+            <div class="w-full flex justify-center up"><img src="{% static 'icons/landing_redo/logos/clubs/4.png' %}"
+                class="logos" alt="" srcset=""></div>
+            <div class="w-full flex justify-center up"><img src="{% static 'icons/landing_redo/logos/clubs/5.png' %}"
+                class="logos" alt="" srcset=""></div>
+          </div>
+
+
+          <div
+            class="basis-[0%] md:basis-[25%] lg:basis-[17%] hidden md:flex flex-col justify-between items-center bg-two">
+
+            <div class="w-full flex justify-center down"><img
+                src="{% static 'icons/landing_redo/logos/leagues/1.png' %}" class="logos" alt="" srcset=""></div>
+            <div class="w-full flex justify-center down"><img
+                src="{% static 'icons/landing_redo/logos/leagues/2.png' %}" class="logos" alt="" srcset=""
+                style="max-width: 14vh;"></div>
+            <div class="w-full flex justify-center down"><img
+                src="{% static 'icons/landing_redo/logos/leagues/3.png' %}" class="logos" alt="" srcset=""></div>
+            <div class="w-full flex justify-center down"><img
+                src="{% static 'icons/landing_redo/logos/leagues/4.png' %}" class="logos" alt="" srcset=""></div>
+            <div class="w-full flex justify-center down"><img
+                src="{% static 'icons/landing_redo/logos/leagues/5.png' %}" class="logos" alt="" srcset=""></div>
+
+            <div class="w-full flex justify-center down"><img
+                src="{% static 'icons/landing_redo/logos/leagues/1.png' %}" class="logos" alt="" srcset=""></div>
+            <div class="w-full flex justify-center down"><img
+                src="{% static 'icons/landing_redo/logos/leagues/2.png' %}" class="logos" alt="" srcset=""
+                style="max-width: 14vh;"></div>
+            <div class="w-full flex justify-center down"><img
+                src="{% static 'icons/landing_redo/logos/leagues/3.png' %}" class="logos" alt="" srcset=""></div>
+            <div class="w-full flex justify-center down"><img
+                src="{% static 'icons/landing_redo/logos/leagues/4.png' %}" class="logos" alt="" srcset=""></div>
+            <div class="w-full flex justify-center down"><img
+                src="{% static 'icons/landing_redo/logos/leagues/5.png' %}" class="logos" alt="" srcset=""></div>
+          </div>
+
+
+          <div
+            class="basis-[0%] md:basis-[0%] lg:basis-[17%] hidden lg:flex flex-col justify-between items-center bg-three">
+
+            <div class="w-full flex justify-center up"><img src="{% static 'icons/landing_redo/logos/crypto/1.png' %}"
+                class="logos" alt="" srcset=""></div>
+            <div class="w-full flex justify-center up"><img src=" {% static 'icons/landing_redo/logos/crypto/2.png' %}"
+                class="logos" alt="" srcset=""></div>
+            <div class="w-full flex justify-center up"><img src=" {% static 'icons/landing_redo/logos/crypto/3.png' %}"
+                class="logos" alt="" srcset=""></div>
+            <div class="w-full flex justify-center up"><img src=" {% static 'icons/landing_redo/logos/crypto/4.png' %}"
+                class="logos" alt="" srcset=""></div>
+            <div class="w-full flex justify-center up"><img src=" {% static 'icons/landing_redo/logos/crypto/5.png' %}"
+                class="logos" alt="" srcset=""></div>
+
+            <div class="w-full flex justify-center up"><img src="{% static 'icons/landing_redo/logos/crypto/1.png' %}"
+                class="logos" alt="" srcset=""></div>
+            <div class="w-full flex justify-center up"><img src=" {% static 'icons/landing_redo/logos/crypto/2.png' %}"
+                class="logos" alt="" srcset=""></div>
+            <div class="w-full flex justify-center up"><img src=" {% static 'icons/landing_redo/logos/crypto/3.png' %}"
+                class="logos" alt="" srcset=""></div>
+            <div class="w-full flex justify-center up"><img src=" {% static 'icons/landing_redo/logos/crypto/4.png' %}"
+                class="logos" alt="" srcset=""></div>
+            <div class="w-full flex justify-center up"><img src=" {% static 'icons/landing_redo/logos/crypto/5.png' %}"
+                class="logos" alt="" srcset=""></div>
+          </div>
+
+
+          <div class="basis-[67%] md:basis-[50%] lg:basis-[49%] border-s-2 shadow-2xl bg-four">
+            <div class="flex flex-col justify-center h-full">
+              <a href="{% url 'login' %}" class="px-3 py-5 rajdhani">Login</a>
+              <a href="{% url 'contact' %}"  class="px-3 py-5 rajdhani">Hilfe</a>
+              <a class="px-3 py-5 rajdhani" >Spiele</a>
+              <a href="{% url 'contact' %}" class="px-3 py-5 rajdhani" >Kontakt</a>
+              <a class="px-3 py-5 rajdhani" >Community</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div id="slideout"
+    class="w-full inset-0 absolute md:hidden top-0 bg-four -left-full transition-all duration-300 ease-in-out ">
+    <div class="flex flex-col w-full">
+      <div class="w-full panton text-center shadow-border mt-[7.7rem] px-2 py-8">
+        <a href="{% url 'login' %}">Login</a>
+      </div>
+      <div class="w-full panton text-center shadow-border px-2 py-8">
+        Spiele
+      </div>
+      <div class="w-full panton text-center shadow-border px-2 py-8">
+        <a href="{% url 'contact' %}" >Kontakt</a>
+      </div>
+      <div class="w-full panton text-center shadow-border px-2 py-8">
+        Community
+      </div>
+    </div>
+  </div>
+  <script>
+    function slideout(burger) {
+      const slider = document.getElementById('slideout');
+      if (slider.classList.contains('-left-full')) {
+        slider.classList.remove('-left-full');
+        slider.classList.add('left-0');
+        burger.style.transform = "rotate(90deg)";
+      } else {
+        slider.classList.remove('left-0');
+        slider.classList.add('-left-full');
+        burger.style.transform = "rotate(0)"
+      }
+    }
+  </script>
+</body>
+
+</html>

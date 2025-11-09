@@ -115,62 +115,69 @@
       {% endif %}
     </section>
     
-    <section>
+<section>
       <h4 class="sidebar-header">Liga</h4>
-      <a class="liga sidebarlinks" 
+      <a class="liga sidebarlinks" {% if user.is_authenticated %}
        hx-get="{% url 'index' %}?tournament=Bundesliga" 
        hx-push-url="true" 
        hx-target="#page-content" 
        hx-indicator="#content_spinner"
+       {% endif %}
       >
         <img class="align-middle" src="{% static 'pics/leagues/cropped_leagues/small/bundesliga-logo.png' %}" alt="">
         Bundesliga
       </a>
-      <a class="liga sidebarlinks" 
+      <a class="liga sidebarlinks" {% if user.is_authenticated %}
        hx-get="{% url 'index' %}?tournament=Premier League" 
        hx-push-url="true" 
        hx-target="#page-content" 
        hx-indicator="#content_spinner"
+       {% endif %}
       >
         <img class="" src="{% static 'pics/leagues/cropped_leagues/small/premierleague-logo.png' %}" alt=""> Premier League
       </a>
-      <a class="liga sidebarlinks" 
+      <a class="liga sidebarlinks" {% if user.is_authenticated %}
        hx-get="{% url 'index' %}?tournament=La liga" 
        hx-push-url="true" 
        hx-target="#page-content" 
        hx-indicator="#content_spinner"
+       {% endif %}
       >
         <img class="align-middle" src="{% static 'pics/leagues/cropped_leagues/small/laliga-logo.png' %}" alt=""> La Liga
       </a>
-      <a class="liga sidebarlinks" 
+      <a class="liga sidebarlinks" {% if user.is_authenticated %}
        hx-get="{% url 'index' %}?tournament=Serie A" 
        hx-push-url="true" 
        hx-target="#page-content" 
        hx-indicator="#content_spinner"
+       {% endif %}
       >
         <img class="align-middle" src="{% static 'pics/leagues/cropped_leagues/small/seriea-logo.png' %}" alt=""> Serie A
       </a>
-      <a class="liga sidebarlinks" 
+      <a class="liga sidebarlinks" {% if user.is_authenticated %}
        hx-get="{% url 'index' %}?tournament=Ligue 1" 
        hx-push-url="true" 
        hx-target="#page-content" 
        hx-indicator="#content_spinner"
+       {% endif %}
       >
         <img class="align" src="{% static 'pics/leagues/cropped_leagues/small/ligue1-logo.png' %}" alt=""> Ligue 1
       </a>
-      <a class="liga sidebarlinks" 
+      <a class="liga sidebarlinks" {% if user.is_authenticated %}
       hx-get="{% url 'index' %}?tournament=Europa League" 
        hx-push-url="true" 
        hx-target="#page-content" 
        hx-indicator="#content_spinner"
+       {% endif %}
        >
         <img class="" src="{% static 'pics/leagues/cropped_leagues/small/ec-logo.png' %}" alt=""> Europa League
       </a>
-      <a class="liga sidebarlinks" 
+      <a class="liga sidebarlinks" {% if user.is_authenticated %}
        hx-get="{% url 'index' %}?tournament=Champions League" 
        hx-push-url="true" 
        hx-target="#page-content" 
        hx-indicator="#content_spinner"
+       {% endif %}
        >
         <img class="align-middle" src="{% static 'pics/leagues/cropped_leagues/small/cl-logo.png' %}" alt=""> Champions
         League

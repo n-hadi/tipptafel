@@ -20,6 +20,8 @@ from django.contrib.admin.views.decorators import staff_member_required
 # Create your views here.
 def index(request):
  user = request.user if request.user.is_authenticated else None
+ if user is None:
+   return render(request,'core/indexV2.html')
  if request.htmx and request.GET and user != None: #Filter
       if not request.GET.get('tournament'):
         #filter modal

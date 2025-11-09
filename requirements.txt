@@ -24,11 +24,15 @@ django-simple-history==3.3.0
 django-widget-tweaks==1.4.12
 ecdsa==0.18.0
 groestlcoin-hash2==1.1.1
+gunicorn==21.2.0
 idna==3.4
 lxml==4.9.3
+packaging==23.2
 pilkit==2.0
 Pillow==9.3.0
+psycopg2==2.9.9
 pycparser==2.21
+python-decouple==3.8
 python-monkey-business==1.0.0
 pytz==2023.3.post1
 reportlab==4.0.5
