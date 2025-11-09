@@ -7,7 +7,7 @@ a football game has 3 outcomes team1 wins, team2 wins, or draw. users can create
 if a game cannot have a draw then of course theres only one option to pick out of 2: either team1 wins or team2 wins.
 lets say i create a bet and bet chelsea wins against mancity or they play draw and i bet 20 taler (inhouse site currency). now you wait for another user to accept the bet.
 both users stake 20 taler. so if chelsea wins or they draw i get my 20 taler back and the 20 taler from the opponent. 
-if mancity wins the other nigga gets my 20 taler and his 20 talers. 
+if mancity wins the other ninja gets my 20 taler and his 20 talers. 
 
 ![ezgif-888e8ba74d76f961](https://github.com/user-attachments/assets/39e37603-a7d1-4d0e-a4e4-61bf05360c13)
 
