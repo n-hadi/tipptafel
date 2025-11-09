@@ -28,9 +28,9 @@ SECRET_KEY = config("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['localhost', '164.92.160.21','tipptafel.de','www.tipptafel.de']
+ALLOWED_HOSTS = ['localhost']
 CSRF_TRUSTED_ORIGINS = [
-    'https://btcpay.tipptafel.de'
+    'https://btcpay.xxxx.de'
 ]
 
 
@@ -101,9 +101,9 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'tipptafel_db',
-        'USER': 'tipptafel_db_user',
-        'PASSWORD': '9V]$U137zoLo',
+        'NAME': 'xxxx',
+        'USER': 'xxxx',
+        'PASSWORD': 'xxxx',
         'HOST': 'localhost',
         'PORT': '',
     }
