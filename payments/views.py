@@ -152,29 +152,29 @@ def withdrawview(request):
 """
 btcpay_webhook response data after json loads
 {
-   "id":"WrE8YbXhZZg64CaHrRvXcp",
-   "url":"https://btcpay110659.lndyn.com/invoice?id=WrE8YbXhZZg64CaHrRvXcp",
+   "id":"xxxxxx",
+   "url":"",
    "posData":"None",
    "status":"confirmed",
-   "btcPrice":"0.00003520",
+   "btcPrice":"0.xxxx",
    "price":1.0,
    "currency":"EUR",
-   "invoiceTime":1688401984000,
-   "expirationTime":1688403784000,
-   "currentTime":1688405196732,
-   "btcPaid":"0.00003520",
-   "btcDue":"0.00000000",
-   "rate":28413.2,
+   "invoiceTime":xx,
+   "expirationTime":xxx,
+   "currentTime":x,
+   "btcPaid":"x",
+   "btcDue":"xxx",
+   "rate":xx,
    "exceptionStatus":false,
    "buyerFields":"None",
    "transactionCurrency":"None",
    "paymentSubtotals":{
-      "btc":3520.0,
-      "btC_LightningLike":3520.0
+      "btc":x.0,
+      "btC_LightningLike":x.0
    },
    "paymentTotals":{
-      "btc":3520.0,
-      "btC_LightningLike":3520.0
+      "btc":x.0,
+      "btC_LightningLike":x.0
    },
    "amountPaid":"0.00000000",
    "exchangeRates":{
@@ -182,7 +182,7 @@ btcpay_webhook response data after json loads
          "eur":0.0
       }
    },
-   "orderId":"40",
+   "orderId":"x",
    "_warning":"This data could have easily been faked and should not be trusted. Please run any invoice checks by first fetching the invoice through the API."
 }
 """
