@@ -1,4 +1,4 @@
-This is a useless, garbage P2P betting site that nobody ever used. I made it a few years ago with Django and HTMX.
+P2P betting site. I made it a few years ago with Django and HTMX.
 The UI looks terrible and the code is ugly, but it works more or less. Payments are made with Bitcoin via a separate BTCPayServer that I set up.
 
 Concept: A football game has three outcomes: Team 1 wins, Team 2 wins, or a draw. Users can create a bet and pick one or two outcomes and set a stake. If a game cannot end in a draw, then there is only one option to pick from two: either Team 1 wins or Team 2 wins.
