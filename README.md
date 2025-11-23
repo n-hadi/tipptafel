@@ -1,13 +1,8 @@
-useless garbage P2P betting site that nobody ever used, which I made a few years ago with Django and HTMX.  
-UI looks like utter shit code is ugly too, but it works more or less.
-payments are done with bitcoin and a seperate btcpayserver i set up. 
+This is a useless, garbage P2P betting site that nobody ever used. I made it a few years ago with Django and HTMX.
+The UI looks terrible and the code is ugly, but it works more or less. Payments are made with Bitcoin via a separate BTCPayServer that I set up.
 
-concept:
-a football game has 3 outcomes team1 wins, team2 wins, or draw. users can create a bet and pick 1 or 2 out of the three outcomes and set a stake. 
-if a game cannot have a draw then of course theres only one option to pick out of 2: either team1 wins or team2 wins.
-lets say i create a bet and bet chelsea wins against mancity or they play draw and i bet 20 taler (inhouse site currency). now you wait for another user to accept the bet.
-both users stake 20 taler. so if chelsea wins or they draw i get my 20 taler back and the 20 taler from the opponent. 
-if mancity wins the other ninja gets my 20 taler and his 20 talers. 
+Concept: A football game has three outcomes: Team 1 wins, Team 2 wins, or a draw. Users can create a bet and pick one or two outcomes and set a stake. If a game cannot end in a draw, then there is only one option to pick from two: either Team 1 wins or Team 2 wins.
+Let's say I create a bet on Chelsea winning against Man City, or them playing to a draw, and I bet 20 Taler (the site's in-house currency). Now, you wait for another user to accept the bet. Both users stake 20 Taler. So, if Chelsea wins or they play to a draw, I get my 20 Taler back, plus the 20 Taler from the opponent. If Man City wins, the other user gets my 20 Taler, plus their 20 Taler.
 
 ![ezgif-888e8ba74d76f961](https://github.com/user-attachments/assets/39e37603-a7d1-4d0e-a4e4-61bf05360c13)
 
